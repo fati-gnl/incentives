@@ -1,3 +1,14 @@
+"""
+network_creation.py
+
+This file contains functions for creating networks and setting initial node strategies based on various initialization methods.
+
+Functions:
+    - add_homophily_edges: Add edges to a graph based on homophily condition; how close the gamma values are.
+    - set_strategies: Initialize the strategies for each agent based on the provided parameters.
+    - create_connected_network: Create a connected network with optional homophily and gamma distribution.
+"""
+
 import networkx as nx
 import random
 import warnings

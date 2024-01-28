@@ -1,3 +1,17 @@
+"""
+model.py
+
+This file defines the GameModel class, a Mesa model representing the dynamics of agents in a networked game scenario.
+Agents interact with their neighbors, updating their strategies based on payoff calculations and individual thresholds.
+
+Methods:
+    - generate_truncated_normal: Generate Vh values from a truncated normal distribution.
+    - get_network_with_colors: Return the network with node colors based on agents' strategies.
+    - step: Execute one step of the model, updating agent strategies and collecting data.
+    - get_final_cascade_size_scaled: Get the final cascade size considering only non-initiator agents.
+    - get_final_cascade_size: Get the final cascade size considering all agents.
+"""
+
 import networkx as nx
 from mesa import Model
 from mesa.time import RandomActivation
@@ -36,7 +50,7 @@ class GameModel(Model):
                 initiator = True
             else:
                 initiator = False
-            agent = GameAgent(node, self, Vl, Vh, p, initial_strategy, alpha_values, initiator)
+            agent = GameAgent(node, self, Vl, p, initial_strategy, alpha_values, initiator)
             self.schedule.add(agent)
 
         # Add agents to the network
@@ -106,6 +120,10 @@ class GameModel(Model):
         self.schedule.step()
 
     def get_final_cascade_size_scaled(self):
+        """
+        Get the final cascade size considering only non-initiator agents.
+        :return: cascade size
+        """
         # Get all recorded data
         all_data = self.datacollector.get_agent_vars_dataframe()
 
@@ -121,6 +139,10 @@ class GameModel(Model):
         return cascade_size
 
     def get_final_cascade_size(self):
+        """
+        Get the final cascade size considering all agents.
+        :return: cascade size
+        """
         # Get all recorded data
         all_data = self.datacollector.get_agent_vars_dataframe()
 

@@ -1,6 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from model import GameModel
+from src.model import GameModel
 import random
 
 # Parameters

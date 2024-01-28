@@ -1,14 +1,24 @@
+"""
+agent.py
+
+This file defines the GameAgent class, which represents an agent in the simulation.
+Agents have two possible strategies ("Stick to Traditional" or "Adopt New Technology"),
+and they update their strategies based on payoff calculations and individual thresholds.
+
+Methods:
+    - payoff_current_choice: Calculate the payoff for the current strategy.
+    - update_strategy: Update the agent's strategy based on calculated payoff and individual threshold.
+"""
+
 from mesa import Agent
-import random
 
 class GameAgent(Agent):
-    def __init__(self, unique_id, model, Vl, Vh, p, initial_strategy, alpha_values, initiator):
+    def __init__(self, unique_id, model, Vl, p, initial_strategy, alpha_values, initiator):
         """
         Initialize a game agent
         :param int unique_id: Unique identifier for the agent.
         :param GameModel model: Reference to the model containing the agent.
         :param float Vl: Low reward for not selecting their preferred strategy.
-        :param float Vh: High reward for selecting their preferred strategy.
         :param float p: Penalty for miscoordination with neighbours.
         :param string initial_strategy: Either "Stick to Traditional" or "Adopt New Technology".
         :param alpha_values: The list of alpha values.
@@ -18,7 +28,6 @@ class GameAgent(Agent):
         self.strategy = initial_strategy
         self.identifier = unique_id
         self.Vl = Vl
-        self.Vh = Vh
         self.p = p
         self.alpha = alpha_values[unique_id]
         self.neighbors = []

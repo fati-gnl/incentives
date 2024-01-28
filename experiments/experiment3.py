@@ -1,6 +1,6 @@
 import matplotlib.pyplot as plt
-import network_creation
-from model import GameModel
+import src.network_creation
+from src.model import GameModel
 from tqdm import tqdm
 import numpy as np
 

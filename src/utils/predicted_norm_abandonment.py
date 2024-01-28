@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
 import numpy as np
-from model import GameModel
-import network_creation
+from src.model import GameModel
+import src.network_creation
 
 # Parameters
 size_network = 40
