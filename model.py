@@ -3,26 +3,40 @@ from mesa import Model
 from mesa.time import RandomActivation
 from scipy.stats import truncnorm
 from agent import GameAgent
+from mesa.datacollection import DataCollector
 
 class GameModel(Model):
-    def __init__(self, num_agents, network, Vl, Vh, p, initial_strategy_prob):
+    def __init__(self, num_agents, network, node_degrees, Vl, Vh, p):
         """
         Initialize a GameModel.
         :param int num_agents: Number of agents in the model.
         :param network: Parameters for generating the network (e.g., size, connectivity).
+        :param node_degrees: The distinct degrees of the network.
         :param float Vl: Low reward for not selecting their preferred strategy.
         :param float Vh: High reward for selecting their preferred strategy.
         :param float p: Penalty for miscoordination with neighbours.
-        :param initial_strategy_prob: Probability for initially selecting the "Adopt New Technology" strategy.
         """
         self.num_agents = num_agents
         self.network = network
+        self.node_degrees = node_degrees
         self.schedule = RandomActivation(self)
         self.pos = nx.spring_layout(self.network)
 
-        # Create agents
-        for i in range(num_agents):
-            agent = GameAgent(i, self, Vl, Vh, p, initial_strategy_prob)
+        # Store node degrees
+        self.node_degrees = nx.degree(network)
+
+        # Get the alpha values and initial strategies from the network
+        alpha_values = nx.get_node_attributes(self.network, 'alpha')
+        initial_strategies = nx.get_node_attributes(self.network, 'strategy')
+
+        # Initialise each node with an alpha value and an strategy
+        for node, degree in node_degrees.items():
+            initial_strategy = initial_strategies[node]
+            if initial_strategy == "Adopt New Technology":
+                initiator = True
+            else:
+                initiator = False
+            agent = GameAgent(node, self, Vl, Vh, p, initial_strategy, alpha_values, initiator)
             self.schedule.add(agent)
 
         # Add agents to the network
@@ -32,7 +46,13 @@ class GameModel(Model):
 
         self.pct_norm_abandonmnet = []
 
-    def generate_truncated_normal(self, mean, lower_bound, upper_bound, size=1):
+        # DataCollector to track strategy changes
+        self.datacollector = DataCollector(
+            agent_reporters={"Strategy": "strategy", "Initiator": "initiator", "Identifier": "identifier"}
+        )
+
+    @staticmethod
+    def generate_truncated_normal(mean, lower_bound, upper_bound, size=1):
         """
         Generate values from a truncated normal distribution.
         :param mean: Mean value for the distribution.
@@ -78,7 +98,39 @@ class GameModel(Model):
         pct_norm_abandonmnet = (new_tech_count / N) * 100
         self.pct_norm_abandonmnet.append(pct_norm_abandonmnet)
 
+        self.datacollector.collect(self)
+
         for agent in self.schedule.agents:
             agent.update_strategy(agent.num_traditional, agent.num_new)
 
         self.schedule.step()
+
+    def get_final_cascade_size_scaled(self):
+        # Get all recorded data
+        all_data = self.datacollector.get_agent_vars_dataframe()
+
+        # Identify agents whose strategy changed to "Adopt New Technology" at least once
+        changed_agents = all_data[
+            (all_data["Strategy"] == "Adopt New Technology") & (all_data["Initiator"] == False)
+            ]
+
+        unique_changed_agents = changed_agents.drop_duplicates(subset=["Identifier"])
+
+        # Calculate cascade size (number of unique agents)
+        cascade_size = len(unique_changed_agents)
+        return cascade_size
+
+    def get_final_cascade_size(self):
+        # Get all recorded data
+        all_data = self.datacollector.get_agent_vars_dataframe()
+
+        # Identify agents whose strategy changed to "Adopt New Technology" at least once
+        changed_agents = all_data[
+            (all_data["Strategy"] == "Adopt New Technology")
+            ]
+
+        unique_changed_agents = changed_agents.drop_duplicates(subset=["Identifier"])
+
+        # Calculate cascade size (number of unique agents)
+        cascade_size = len(unique_changed_agents)
+        return cascade_size
