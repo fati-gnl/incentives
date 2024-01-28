@@ -1,3 +1,9 @@
+"""
+distributions.py
+
+With the use of this file, you can plot how different distributions of the Vh values would look like.
+"""
+
 import numpy as np
 import matplotlib.pyplot as plt
 from src.model import GameModel

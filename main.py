@@ -1,6 +1,6 @@
 import networkx as nx
-import network_creation
-from model import GameModel
+from src.network_creation import create_connected_network
+from src.model import GameModel
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -14,10 +14,10 @@ Vl = 8
 p = 8
 
 # Generate a connected no_gamma network
-G, node_degrees = network_creation.create_connected_network(size_network, connectivity_prob, random_seed, Vh=Vh, homophily=False, homophily_strength=0.01, count=10, node_degree=0, gamma=False, initialisation="Highest_node")
+G, node_degrees = create_connected_network(size_network, connectivity_prob, random_seed, Vh=Vh, homophily=False, homophily_strength=0.01, count=10, node_degree=0, gamma=False, initialisation="Highest_node")
 
 # Create the model
-model = GameModel(num_agents=size_network, network=G, node_degrees= node_degrees, Vl=Vl, Vh=Vh, p=p)
+model = GameModel(num_agents=size_network, network=G, node_degrees= node_degrees, Vl=Vl, p=p)
 
 # Run the model for a certain number of steps
 for step in range(model_steps):

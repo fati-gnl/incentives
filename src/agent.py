@@ -13,7 +13,7 @@ Methods:
 from mesa import Agent
 
 class GameAgent(Agent):
-    def __init__(self, unique_id, model, Vl, p, initial_strategy, alpha_values, initiator):
+    def __init__(self, unique_id, model, Vl, p, initial_strategy, gamma_values, initiator):
         """
         Initialize a game agent
         :param int unique_id: Unique identifier for the agent.
@@ -21,7 +21,7 @@ class GameAgent(Agent):
         :param float Vl: Low reward for not selecting their preferred strategy.
         :param float p: Penalty for miscoordination with neighbours.
         :param string initial_strategy: Either "Stick to Traditional" or "Adopt New Technology".
-        :param alpha_values: The list of alpha values.
+        :param gamma_values: The list of alpha values.
         :param Boolean initiator: Whether or not their strategy is "Adopt New Technology" at the start of the simulation
         """
         super().__init__(unique_id, model)
@@ -29,7 +29,7 @@ class GameAgent(Agent):
         self.identifier = unique_id
         self.Vl = Vl
         self.p = p
-        self.alpha = alpha_values[unique_id]
+        self.gamma = gamma_values[unique_id]
         self.neighbors = []
         self.num_traditional = 0
         self.num_new = 0
@@ -44,7 +44,7 @@ class GameAgent(Agent):
         """
         N = len(self.neighbors)
         if self.strategy == "Adopt New Technology":
-            payoff = self.alpha * N - self.p * num_stick_to_traditional
+            payoff = self.gamma * N - self.p * num_stick_to_traditional
         else:
             payoff = self.Vl * N - self.p * num_adopt_new_tech
         return payoff
@@ -59,7 +59,7 @@ class GameAgent(Agent):
 
         # Calculate the payoffs for their opposite choice
         N = len(self.neighbors)
-        payoff_new = self.alpha * N - self.p * num_stick_to_traditional
+        payoff_new = self.gamma * N - self.p * num_stick_to_traditional
         payoff_traditional = self.Vl * N - self.p * num_adopt_new_tech
 
         if current_payoff < payoff_new and self.strategy == "Stick to Traditional":

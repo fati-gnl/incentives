@@ -1,6 +1,15 @@
+"""
+Experiment2.py
+
+Cascade Size as a Function of Initiator Probability
+
+This experiment investigates the cascade size as a function of the nodes whose strategy is "Adopt New Technology" at the
+start of the simulation. Different parameters such as network structure, gamma distribution, and initiator strategy can be adjusted.
+"""
+
 import matplotlib.pyplot as plt
 import numpy as np
-import src.network_creation
+from src.network_creation import create_connected_network
 from src.model import GameModel
 
 # Parameters
@@ -21,11 +30,11 @@ initiator_probs = np.linspace(0.1, 0.45, 25)
 
 for p in p_values:
     for initiator_prob in initiator_probs:
-        G, node_degrees = network_creation.create_connected_network(
+        G, node_degrees = create_connected_network(
             size_network, connectivity_prob, random_seed, Vh=Vh, homophily=False, homophily_strength=0.01,
             count=(int(initiator_prob * size_network)), node_degree=0, gamma=False, initialisation="higuest_node")
 
-        model = GameModel(num_agents=size_network, network=G, node_degrees=node_degrees, Vl=Vl, Vh=Vh, p=p)
+        model = GameModel(num_agents=size_network, network=G, node_degrees=node_degrees, Vl=Vl, p=p)
 
         for step in range(model_steps):
             model.step()
@@ -33,8 +42,6 @@ for p in p_values:
         final_cascade_size = model.get_final_cascade_size_scaled() / size_network
 
         results[p].append((initiator_prob, final_cascade_size))
-
-#plt.plot(initiator_probs, [cascade_size for initiator_prob, cascade_size in results], marker='o')
 
 def calculate_tipping_threshold(Vl, Vh, p):
     return (-Vh + Vl + p)/ (2*p)

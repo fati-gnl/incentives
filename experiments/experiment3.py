@@ -1,5 +1,15 @@
+"""
+Experiment3.py
+
+Tipping Threshold as a Function of Initiator Probability
+
+This experiment investigates the minimum initiator probability required for a certain tipping threshold
+in order to guarantee a global cascade. Different parameters such as network structure, gamma distribution,
+and initiator strategy can be adjusted.
+"""
+
 import matplotlib.pyplot as plt
-import src.network_creation
+from src.network_creation import create_connected_network
 from src.model import GameModel
 from tqdm import tqdm
 import numpy as np
@@ -28,12 +38,12 @@ for p in p_values:
         # Check that for the first value that we are checking, the system is not already fully transitioned
         print("initiator count" + str(initiator_count))
 
-        G, node_degrees = network_creation.create_connected_network(
+        G, node_degrees = create_connected_network(
             size_network, connectivity_prob, random_seed, Vh=Vh, homophily=False, homophily_strength=0.01,
             count=initiator_count, node_degree=0, gamma=False, initialisation="Highest_node")
 
 
-        model = GameModel(num_agents=size_network, network=G, node_degrees=node_degrees, Vl=Vl, Vh=Vh, p=p)
+        model = GameModel(num_agents=size_network, network=G, node_degrees=node_degrees, Vl=Vl, p=p)
 
         for step in range(model_steps):
             model.step()
@@ -43,7 +53,7 @@ for p in p_values:
         if(pct_norm_abandonment != 100):
             print("not 100, so starting 2 while loop")
             while True:
-                G, node_degrees = network_creation.create_connected_network(
+                G, node_degrees = create_connected_network(
                         size_network, connectivity_prob, random_seed, Vh=Vh, homophily=False, homophily_strength=0.01,
                         count=initiator_count, node_degree=0
                     )
@@ -82,7 +92,6 @@ file_path = "results.txt"
 np.savetxt(file_path, results, header="Initiator Probability Tipping Threshold", comments="")
 
 # Plot the results
-#plt.plot(initiator_probabilities, tipping_thresholds, marker='o')
 plt.plot(tipping_thresholds, initiator_probabilities, marker='o')
 
 plt.ylabel("Initiator Probability")

@@ -1,6 +1,15 @@
+"""
+Experiment1.py
+
+Adoption of New Technology Over Time for Different Count Numbers
+
+This experiment investigates the adoption of new technology over time for varying count numbers.
+Different parameters such as network structure, gamma distribution, and initiator strategy can be adjusted.
+"""
+
 import matplotlib.pyplot as plt
 import numpy as np
-import src.network_creation
+from src.network_creation import create_connected_network
 from src.model import GameModel
 
 # Parameters
@@ -16,19 +25,15 @@ p = 8
 results = []
 
 # Loop through different count values
-for count in np.linspace(319, 319, 1, dtype=int):
+for count in np.linspace(175, 350, 10, dtype=int):
 
     # Generate a connected no_gamma network
-    G, node_degrees = network_creation.create_connected_network(
-        size_network, connectivity_prob, random_seed, Vh=Vh, homophily=False, homophily_strength=0.01,
-        count=count, node_degree=0
-    )
-    G, node_degrees = network_creation.create_connected_network(
+    G, node_degrees = create_connected_network(
         size_network, connectivity_prob, random_seed, Vh=Vh,homophily=False, homophily_strength=0.01,
-        count=count,node_degree=0,gamma=False,initialisation="higuest_node")
+        count=count,node_degree=0,gamma=True,initialisation="Lowest_gamma")
 
     # Create the model
-    model = GameModel(num_agents=size_network, network=G, node_degrees=node_degrees, Vl=Vl, Vh=Vh, p=p)
+    model = GameModel(num_agents=size_network, network=G, node_degrees=node_degrees, Vl=Vl, p=p)
 
     # Run the model for a certain number of steps
     for step in range(model_steps):

@@ -12,7 +12,7 @@ Functions:
 import networkx as nx
 import random
 import warnings
-from model import GameModel
+from src.model import GameModel
 
 def add_homophily_edges(G, gamma_values, homophily_strength):
     """

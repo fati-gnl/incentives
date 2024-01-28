@@ -1,10 +1,26 @@
+"""
+network_degree_count.py
+
+With the use of this file, you can get a list for a certain network size and connectivity probability
+that details how many nodes have a particular degree.
+"""
+
 import random
 import networkx as nx
 import os
 
 def create_connected_network(size, connectivity, seed1):
+    """
+    Returns a list for a certain network size and connectivity probability
+    that details how many nodes have a particular degree.
+    :param int size: Number of nodes in the network.
+    :param float connectivity: Probability of edge creation between nodes.
+    :param int seed1:  Seed for number generation.
+    :return: degree, count_list
+    """
     random.seed(seed1)
     G = nx.erdos_renyi_graph(size, connectivity, seed=seed1)
+
     # If there are nodes without edges, connect them to the network.
     while not nx.is_connected(G):
         nodes_to_connect = list(nx.isolates(G))
@@ -18,6 +34,7 @@ def create_connected_network(size, connectivity, seed1):
     distinct_degrees = set(node_degrees.values())
 
     count_list=[]
+
     # Print distinct degrees and their counts
     print("Distinct degrees of nodes and their counts:")
     for degree in distinct_degrees:

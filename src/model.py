@@ -16,18 +16,17 @@ import networkx as nx
 from mesa import Model
 from mesa.time import RandomActivation
 from scipy.stats import truncnorm
-from agent import GameAgent
+from src.agent import GameAgent
 from mesa.datacollection import DataCollector
 
 class GameModel(Model):
-    def __init__(self, num_agents, network, node_degrees, Vl, Vh, p):
+    def __init__(self, num_agents, network, node_degrees, Vl, p):
         """
         Initialize a GameModel.
         :param int num_agents: Number of agents in the model.
         :param network: Parameters for generating the network (e.g., size, connectivity).
         :param node_degrees: The distinct degrees of the network.
         :param float Vl: Low reward for not selecting their preferred strategy.
-        :param float Vh: High reward for selecting their preferred strategy.
         :param float p: Penalty for miscoordination with neighbours.
         """
         self.num_agents = num_agents
@@ -39,8 +38,8 @@ class GameModel(Model):
         # Store node degrees
         self.node_degrees = nx.degree(network)
 
-        # Get the alpha values and initial strategies from the network
-        alpha_values = nx.get_node_attributes(self.network, 'alpha')
+        # Get the gamma values and initial strategies from the network
+        gamma_values = nx.get_node_attributes(self.network, 'gamma')
         initial_strategies = nx.get_node_attributes(self.network, 'strategy')
 
         # Initialise each node with an alpha value and an strategy
@@ -50,7 +49,7 @@ class GameModel(Model):
                 initiator = True
             else:
                 initiator = False
-            agent = GameAgent(node, self, Vl, p, initial_strategy, alpha_values, initiator)
+            agent = GameAgent(node, self, Vl, p, initial_strategy, gamma_values, initiator)
             self.schedule.add(agent)
 
         # Add agents to the network
