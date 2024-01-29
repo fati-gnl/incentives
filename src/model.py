@@ -41,6 +41,7 @@ class GameModel(Model):
         # Get the gamma values and initial strategies from the network
         gamma_values = nx.get_node_attributes(self.network, 'gamma')
         initial_strategies = nx.get_node_attributes(self.network, 'strategy')
+        incentive_values =  nx.get_node_attributes(self.network, 'incentive_amount')
 
         # Initialise each node with an alpha value and an strategy
         for node, degree in node_degrees.items():
@@ -49,7 +50,8 @@ class GameModel(Model):
                 initiator = True
             else:
                 initiator = False
-            agent = GameAgent(node, self, Vl, p, initial_strategy, gamma_values, initiator)
+            incentive_amount = incentive_values[node]
+            agent = GameAgent(node, self, Vl, p, initial_strategy, gamma_values, initiator, incentive_amount)
             self.schedule.add(agent)
 
         # Add agents to the network

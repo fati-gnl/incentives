@@ -8,13 +8,13 @@ import numpy as np
 size_network = 1000
 connectivity_prob = 0.05
 random_seed = 123
-model_steps = 15
+model_steps = 25
 Vh=11
 Vl = 8
-p = 8
+p = 7
 
 # Generate a connected no_gamma network
-G, node_degrees = create_connected_network(size_network, connectivity_prob, random_seed, Vh=Vh, homophily=False, homophily_strength=0.01, count=10, node_degree=0, gamma=False, initialisation="Highest_node")
+G, node_degrees = create_connected_network(size_network, connectivity_prob, random_seed, Vh=Vh, homophily=False, homophily_strength=0.01, initiators=244, node_degree=0, gamma=True, initialisation="Lowest_degree", incentive_count = 0, incentive_amount = 0, incentive_strategy="Highest_degree")
 
 # Create the model
 model = GameModel(num_agents=size_network, network=G, node_degrees= node_degrees, Vl=Vl, p=p)

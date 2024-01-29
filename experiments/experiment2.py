@@ -32,7 +32,8 @@ for p in p_values:
     for initiator_prob in initiator_probs:
         G, node_degrees = create_connected_network(
             size_network, connectivity_prob, random_seed, Vh=Vh, homophily=False, homophily_strength=0.01,
-            count=(int(initiator_prob * size_network)), node_degree=0, gamma=False, initialisation="higuest_node")
+            initiators=(int(initiator_prob * size_network)), node_degree=0, gamma=False, initialisation="Highest_degree",
+            incentive_count = 0, incentive_amount = 0, incentive_strategy="Highest_degree")
 
         model = GameModel(num_agents=size_network, network=G, node_degrees=node_degrees, Vl=Vl, p=p)
 

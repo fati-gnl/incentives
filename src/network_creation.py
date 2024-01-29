@@ -7,6 +7,7 @@ Functions:
     - add_homophily_edges: Add edges to a graph based on homophily condition; how close the gamma values are.
     - set_strategies: Initialize the strategies for each agent based on the provided parameters.
     - create_connected_network: Create a connected network with optional homophily and gamma distribution.
+    - incentive_distribution: Distributes the incentive amount to a specified number of individuals based on the chosen incentive distribution strategy.
 """
 
 import networkx as nx
@@ -30,11 +31,11 @@ def add_homophily_edges(G, gamma_values, homophily_strength):
                 if random.uniform(0, 1) < probability:
                     G.add_edge(node1, node2)
 
-def set_strategies(G, count, node_degree, seed, gamma, initialisation):
+def set_strategies(G, initiators, node_degree, seed, gamma, initialisation):
     """
     Initialise the strategies for each agent based on the provided parameters
     :param nx.Graph G: The graph that holds the nodes.
-    :param count: Number of nodes to set their initial strategies to "Adopt New Technology"
+    :param initiators: Number of nodes to set their initial strategies to "Adopt New Technology"
     :param node_degree: Degree of the nodes whose strategies are being affected.
     :param Boolean gamma: whether or not the Vh values will be normally distributed accross the nodes. Otherwise, gamma = Vh.
     :param String initialisation: How the nodes will be initialised: "Random", "Highest_degree", "Lowest_degree", "Highest_gamma", "Lowest_gamma", "By_specified_degree"
@@ -51,7 +52,7 @@ def set_strategies(G, count, node_degree, seed, gamma, initialisation):
 
     if initialisation == "Random":
         nx.set_node_attributes(G, "Stick to Traditional", 'strategy')
-        for _ in range(count):
+        for _ in range(initiators):
             node = random.choice([node for node in G.nodes if G.nodes[node]['strategy'] != "Adopt New Technology"])
             strategy = "Adopt New Technology"
             G.nodes[node]['strategy'] = strategy
@@ -59,28 +60,28 @@ def set_strategies(G, count, node_degree, seed, gamma, initialisation):
     elif initialisation == "Highest_degree":
         sorted_nodes_by_degree = sorted(G.nodes, key=lambda x: G.degree(x), reverse=True)
         nx.set_node_attributes(G, "Stick to Traditional", 'strategy')
-        for node in sorted_nodes_by_degree[:count]:
+        for node in sorted_nodes_by_degree[:initiators]:
             strategy = "Adopt New Technology"
             G.nodes[node]['strategy'] = strategy
 
     elif initialisation == "Lowest_degree":
         sorted_nodes_by_degree = sorted(G.nodes, key=lambda x: G.degree(x))
         nx.set_node_attributes(G, "Stick to Traditional", 'strategy')
-        for node in sorted_nodes_by_degree[:count]:
+        for node in sorted_nodes_by_degree[:initiators]:
             strategy = "Adopt New Technology"
             G.nodes[node]['strategy'] = strategy
 
     elif initialisation == "Highest_gamma":
         sorted_nodes_by_gamma= sorted(G.nodes, key=lambda x: G.nodes[x]['gamma'], reverse=True)
         nx.set_node_attributes(G, "Stick to Traditional", 'strategy')
-        for node in sorted_nodes_by_gamma[:count]:
+        for node in sorted_nodes_by_gamma[:initiators]:
             strategy = "Adopt New Technology"
             G.nodes[node]['strategy'] = strategy
 
     elif initialisation == "Lowest_gamma":
         sorted_nodes_by_gamma = sorted(G.nodes, key=lambda x: G.nodes[x]['gamma'])
         nx.set_node_attributes(G, "Stick to Traditional", 'strategy')
-        for node in sorted_nodes_by_gamma[:count]:
+        for node in sorted_nodes_by_gamma[:initiators]:
             strategy = "Adopt New Technology"
             G.nodes[node]['strategy'] = strategy
 
@@ -89,25 +90,25 @@ def set_strategies(G, count, node_degree, seed, gamma, initialisation):
 
         # Look for the nodes that belong to the specified "node_degree" parameter
         nodes_with_degree = [node for node, degree in node_degrees.items() if degree == node_degree]
-        if len(nodes_with_degree) < count:
-            count = len(nodes_with_degree)
+        if len(nodes_with_degree) < initiators:
+            initiators = len(nodes_with_degree)
 
-        # For those nodes, set the strategy to "Adopt New Technology" if they have been randomly selected out of the total "count" speficied.
-        nodes_to_change = random.sample(nodes_with_degree, count)
+        # For those nodes, set the strategy to "Adopt New Technology" if they have been randomly selected out of the total "initiators" speficied.
+        nodes_to_change = random.sample(nodes_with_degree, initiators)
         for node in nodes_to_change:
             degree_of_node = G.degree(node)
             print(f"Degree of the node {node} changing: {degree_of_node}")
             G.nodes[node]['strategy'] = "Adopt New Technology"
 
     # Print distinct degrees and their counts
-    print("Distinct degrees of nodes and their counts:")
-    for degree in distinct_degrees:
-        count = list(node_degrees.values()).count(degree)
-        print(f"Degree {degree}: {count} nodes")
+    #print("Distinct degrees of nodes and their counts:")
+    #for degree in distinct_degrees:
+        #count = list(node_degrees.values()).count(degree)
+        #print(f"Degree {degree}: {count} nodes")
 
     return node_degrees
 
-def create_connected_network(size, connectivity, seed, Vh, homophily=False, homophily_strength=0.25, count=0, node_degree=0, gamma=False, initialisation="Highest_degree"):
+def create_connected_network(size, connectivity, seed, Vh, homophily=False, homophily_strength=0.25, initiators=0, node_degree=0, gamma=False, initialisation="Highest_degree", incentive_count = 0, incentive_amount = 0, incentive_strategy="Highest_degree"):
     """"
     Create a connected no_gamma network.
     :param int size: Number of nodes in the network.
@@ -116,12 +117,20 @@ def create_connected_network(size, connectivity, seed, Vh, homophily=False, homo
     :param float Vh: High reward for selecting their preferred strategy.
     :param Boolean homophily: Whether or not the network will be structured based on the similarity of the gamma values of ndoes
     :param float homophily_strength
-    :param int count: number of nodes to initialise with the "Adopt New Technology" strategy
+    :param int initiators: number of nodes to initialise with the "Adopt New Technology" strategy
     :param node_degree: specify the degrees that you want to initialise
     :param Boolean gamma: whether or not the Vh values will be normally distributed accross the nodes. Otherwise, gamma = Vh.
     :param String initialisation: How the nodes will be initialised: "Random", "Highest_degree", "Lowest_degree", "Highest_gamma", "Lowest_gamma"
+    :param int incentive_count: Number of persons who will receive an incentive
+    :param int incentive_amount: Amount of incentive per person receiving it
+    :param String incentive_strategy: Strategy for selecting who will receive the incentive: "Random", "Highest_degree", "Lowest_degree", "Highest_gamma", "Lowest_gamma"
     :return: Connected no_gamma network of type networkx.Graph.
     """
+    if initialisation == "Random" or initialisation == "Highest_degree" or initialisation == "Lowest_degree" or initialisation == "Highest_gamma" or initialisation == "Lowest_gamma":
+        pass
+    else:
+        warnings.warn("Please select a valid initialisation strategy.")
+
     if homophily:
         G = nx.Graph()
         for node in range(size):
@@ -156,5 +165,81 @@ def create_connected_network(size, connectivity, seed, Vh, homophily=False, homo
         nx.set_node_attributes(G, gamma_values, 'gamma')
 
     # Initialise the agents strategies
-    node_degrees = set_strategies(G, count, node_degree, seed, gamma, initialisation)
+    node_degrees = set_strategies(G, initiators, node_degree, seed, gamma, initialisation)
+
+    # Initialise the agents incentive counts
+    if incentive_count != 0:
+        incentive_distribution(G, seed, incentive_count, incentive_amount = incentive_amount, incentive_strategy=incentive_strategy)
+    else:
+        nx.set_node_attributes(G, 0, 'incentive_amount')
+
     return G, node_degrees
+
+
+def incentive_distribution(G, seed, incentive_count, incentive_amount, incentive_strategy):
+    """
+    This function distributes the incentive amount to a specified number of individuals ('intive_count')
+    in a network based on the chosen incentive distribution strategy.
+    :param nx.Graph G: The graph that holds the nodes.
+    :param int seed:  Seed for no_gamma number generation.
+    :param int incentive_count: Number of persons who will receive an incentive
+    :param int incentive_amount: Amount of incentive per person receiving it
+    :param String incentive_strategy: Strategy for selecting who will receive the incentive: "Random", "Highest_degree", "Lowest_degree", "Highest_gamma", "Lowest_gamma"
+    """
+    random.seed(seed)
+
+    if incentive_strategy == "Random":
+        nx.set_node_attributes(G, 0, 'incentive_amount')
+        for _ in range(incentive_count):
+            node = random.choice([node for node in G.nodes if G.nodes[node]['strategy'] != "Adopt New Technology"])
+            G.nodes[node]['incentive_amount'] = incentive_amount
+
+    elif incentive_strategy == "Highest_degree":
+        sorted_nodes_by_degree = sorted(G.nodes, key=lambda x: G.degree(x), reverse=True)
+        nx.set_node_attributes(G, 0, 'incentive_amount')
+        count = 0
+        for node in sorted_nodes_by_degree:
+            if G.nodes[node]['strategy'] == "Adopt New Technology":
+                continue
+            G.nodes[node]['incentive_amount'] = incentive_amount
+            count += 1
+            if count == incentive_count:
+                break
+
+    elif incentive_strategy == "Lowest_degree":
+        sorted_nodes_by_degree = sorted(G.nodes, key=lambda x: G.degree(x))
+        nx.set_node_attributes(G, 0, 'incentive_amount')
+        count = 0
+        for node in sorted_nodes_by_degree:
+            if G.nodes[node]['strategy'] == "Adopt New Technology":
+                continue
+            G.nodes[node]['incentive_amount'] = incentive_amount
+            count += 1
+            if count == incentive_count:
+                break
+
+    elif incentive_strategy == "Highest_gamma":
+        sorted_nodes_by_gamma = sorted(G.nodes, key=lambda x: G.nodes[x]['gamma'], reverse=True)
+        nx.set_node_attributes(G, 0, 'incentive_amount')
+        count = 0
+        for node in sorted_nodes_by_gamma:
+            if G.nodes[node]['strategy'] == "Adopt New Technology":
+                continue
+            G.nodes[node]['incentive_amount'] = incentive_amount
+            count += 1
+            if count == incentive_count:
+                break
+
+    elif incentive_strategy == "Lowest_gamma":
+        sorted_nodes_by_gamma = sorted(G.nodes, key=lambda x: G.nodes[x]['gamma'])
+        nx.set_node_attributes(G, 0, 'incentive_amount')
+        count = 0
+        for node in sorted_nodes_by_gamma:
+            if G.nodes[node]['strategy'] == "Adopt New Technology":
+                continue
+            G.nodes[node]['incentive_amount'] = incentive_amount
+            count += 1
+            if count == incentive_count:
+                break
+    else:
+        warnings.warn("Please select a valid initialisation for the incentive strategy.")

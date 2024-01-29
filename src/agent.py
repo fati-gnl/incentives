@@ -13,7 +13,7 @@ Methods:
 from mesa import Agent
 
 class GameAgent(Agent):
-    def __init__(self, unique_id, model, Vl, p, initial_strategy, gamma_values, initiator):
+    def __init__(self, unique_id, model, Vl, p, initial_strategy, gamma_values, initiator, incentive_amount):
         """
         Initialize a game agent
         :param int unique_id: Unique identifier for the agent.
@@ -23,6 +23,7 @@ class GameAgent(Agent):
         :param string initial_strategy: Either "Stick to Traditional" or "Adopt New Technology".
         :param gamma_values: The list of alpha values.
         :param Boolean initiator: Whether or not their strategy is "Adopt New Technology" at the start of the simulation
+        :param float incentive_amount: Amount of incentive received per agent
         """
         super().__init__(unique_id, model)
         self.strategy = initial_strategy
@@ -34,6 +35,8 @@ class GameAgent(Agent):
         self.num_traditional = 0
         self.num_new = 0
         self.initiator = initiator
+        self.incentive_amount = incentive_amount
+        self.first_step = True
 
     def payoff_current_choice(self, num_stick_to_traditional, num_adopt_new_tech):
         """
@@ -46,7 +49,7 @@ class GameAgent(Agent):
         if self.strategy == "Adopt New Technology":
             payoff = self.gamma * N - self.p * num_stick_to_traditional
         else:
-            payoff = self.Vl * N - self.p * num_adopt_new_tech
+            payoff = (self.Vl * N - self.p * num_adopt_new_tech)
         return payoff
 
     def update_strategy(self, num_stick_to_traditional, num_adopt_new_tech):
@@ -59,8 +62,13 @@ class GameAgent(Agent):
 
         # Calculate the payoffs for their opposite choice
         N = len(self.neighbors)
-        payoff_new = self.gamma * N - self.p * num_stick_to_traditional
-        payoff_traditional = self.Vl * N - self.p * num_adopt_new_tech
+        if self.first_step:
+            payoff_new = self.gamma * N - self.p * num_stick_to_traditional + self.incentive_amount
+            self.first_step = False
+        else:
+            payoff_new = self.gamma * N - self.p * num_stick_to_traditional
+
+        payoff_traditional = (self.Vl * N - self.p * num_adopt_new_tech)
 
         if current_payoff < payoff_new and self.strategy == "Stick to Traditional":
             self.strategy = "Adopt New Technology"

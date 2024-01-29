@@ -24,6 +24,11 @@ Vl = 8
 #p_values = [4,4.5,5,5.5,6,6.5,7,7.5,8,8.8,9,9.5,10,10.5,11]
 p_values = [5.5,6,6.5,7,7.5,8,8.8,9,9.5,10,10.5,11,11.5,12,12.5]
 
+incentive_strategy = "Highest_degree"
+initialisation = "Highest_degree"
+incentive_count = 0
+incentive_amount = 0
+
 results = []
 
 def calculate_tipping_threshold(Vl, Vh, p):
@@ -40,7 +45,8 @@ for p in p_values:
 
         G, node_degrees = create_connected_network(
             size_network, connectivity_prob, random_seed, Vh=Vh, homophily=False, homophily_strength=0.01,
-            count=initiator_count, node_degree=0, gamma=False, initialisation="Highest_node")
+            initiators=initiator_count, node_degree=0, gamma=False, initialisation=initialisation,
+            incentive_count = incentive_count, incentive_amount = incentive_amount, incentive_strategy=incentive_strategy)
 
 
         model = GameModel(num_agents=size_network, network=G, node_degrees=node_degrees, Vl=Vl, p=p)
@@ -55,8 +61,8 @@ for p in p_values:
             while True:
                 G, node_degrees = create_connected_network(
                         size_network, connectivity_prob, random_seed, Vh=Vh, homophily=False, homophily_strength=0.01,
-                        count=initiator_count, node_degree=0
-                    )
+                        initiators=initiator_count, node_degree=0, gamma=False, initialisation=initialisation,
+                        incentive_count = incentive_count, incentive_amount = incentive_amount, incentive_strategy=incentive_strategy)
 
                 model = GameModel(num_agents=size_network, network=G, node_degrees=node_degrees, Vl=Vl, Vh=Vh, p=p)
 
