@@ -15,20 +15,19 @@ random_seed = 123
 model_steps = 15
 Vh = 11
 Vl = 8
-p = 10
+p = 8
 
-initiators = 0.2
+initiators = 0.25
 
 incentive_strategy = "Random"
 initialisation = "Lowest_degree"
-incentive_count_values = np.linspace(0.1, 0.45, 25)
+incentive_count_values = np.linspace(0.1, 0.80, 25)
 
 results = []
 
-last_incentive = 0
+last_incentive = 50
 
 for incentive_count in reversed(incentive_count_values):
-
     incentive_count = int(incentive_count * size_network)
     print(incentive_count)
     incentive_amount = last_incentive
@@ -48,7 +47,7 @@ for incentive_count in reversed(incentive_count_values):
     pct_norm_abandonment = model.pct_norm_abandonmnet[-1]
 
     if pct_norm_abandonment != 100:
-        incentive_amount += 1
+        incentive_amount += 10
         print("not 100, so starting while loop")
         while True:
             G, node_degrees = create_connected_network(
@@ -64,24 +63,27 @@ for incentive_count in reversed(incentive_count_values):
 
             pct_norm_abandonment = model.pct_norm_abandonmnet[-1]
 
+            print("pct_norm_abandonment: " + str(pct_norm_abandonment))
             # Check if everyone has abandoned the norm
             if pct_norm_abandonment == 100:
                 print("has entered, successful result")
-                results.append((incentive_count*incentive_amount, incentive_amount))
+                results.append((incentive_count/size_network, incentive_amount*incentive_count))
                 break_outer = True
                 last_incentive = incentive_amount
                 break
             else:
-                incentive_amount += 1
+                incentive_amount += 10
                 print("current incentive amount = " + str(incentive_amount))
 
     if break_outer:
-        break
-
-    if pct_norm_abandonment == 100 and incentive_count == reversed(incentive_count_values)[0]:
-        results.append((incentive_count, 0))
+        continue
     else:
-        print("pct is == 100 for incentive_count " + str(incentive_count))
+        if pct_norm_abandonment == 100 and incentive_count == int(list(reversed(incentive_count_values))[0]*size_network):
+            print("has entered for " + str(incentive_count))
+            # TODO, PROBABLY LOWER IT
+            results.append((incentive_count, 0))
+        else:
+            print("pct is == 100 for incentive_count " + str(incentive_count))
 
 # Plot the results
 incentive_count_values_plot = [ic for ic, ia in results]

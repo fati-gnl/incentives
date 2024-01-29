@@ -9,9 +9,9 @@ connectivity_prob = 0.15
 random_seed = 123
 model_steps = 5
 
-Vl = 10
-Vh_values = np.linspace(10, 20, 100)
-p = 15
+Vl = 2
+Vh_values = np.linspace(3, 7, 100)
+p = 2
 
 num_simulations = 10
 

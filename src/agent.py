@@ -70,7 +70,9 @@ class GameAgent(Agent):
 
         payoff_traditional = (self.Vl * N - self.p * num_adopt_new_tech)
 
+        print("current_payoff: " + str(current_payoff) + " payoff_new: " + str(payoff_new))
         if current_payoff < payoff_new and self.strategy == "Stick to Traditional":
             self.strategy = "Adopt New Technology"
+            print("changed!")
         elif current_payoff < payoff_traditional and self.strategy == "Adopt New Technology":
             self.strategy = "Stick to Traditional"
