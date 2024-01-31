@@ -100,12 +100,6 @@ def set_strategies(G, initiators, node_degree, seed, gamma, initialisation):
             print(f"Degree of the node {node} changing: {degree_of_node}")
             G.nodes[node]['strategy'] = "Adopt New Technology"
 
-    # Print distinct degrees and their counts
-    #print("Distinct degrees of nodes and their counts:")
-    #for degree in distinct_degrees:
-        #count = list(node_degrees.values()).count(degree)
-        #print(f"Degree {degree}: {count} nodes")
-
     return node_degrees
 
 def create_connected_network(size, connectivity, seed, Vh, homophily=False, homophily_strength=0.25, initiators=0, node_degree=0, gamma=False, initialisation="Highest_degree", incentive_count = 0, incentive_amount = 0, incentive_strategy="Highest_degree"):
@@ -171,6 +165,7 @@ def create_connected_network(size, connectivity, seed, Vh, homophily=False, homo
     if incentive_count != 0:
         incentive_distribution(G, seed, incentive_count, incentive_amount = incentive_amount, incentive_strategy=incentive_strategy)
     else:
+        print("Incentive amount is zero")
         nx.set_node_attributes(G, 0, 'incentive_amount')
 
     return G, node_degrees

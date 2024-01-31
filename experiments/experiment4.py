@@ -17,73 +17,76 @@ Vh = 11
 Vl = 8
 p = 8
 
-initiators = 0.25
+initiators = 0.20
 
 incentive_strategy = "Random"
 initialisation = "Lowest_degree"
-incentive_count_values = np.linspace(0.1, 0.80, 25)
+incentive_count_values = np.linspace(0.1, 0.80, 20)
 
 results = []
 
-last_incentive = 50
+last_incentive = 80
 
-for incentive_count in reversed(incentive_count_values):
+print("reversed: " + str(list(reversed(incentive_count_values))))
+
+for incentive_count in list(reversed(incentive_count_values)):
     incentive_count = int(incentive_count * size_network)
     print(incentive_count)
     incentive_amount = last_incentive
     break_outer = False
 
-    G, node_degrees = create_connected_network(
-        size_network, connectivity_prob, random_seed, Vh=Vh, homophily=False, homophily_strength=0.01,
-        initiators=int(initiators*size_network), node_degree=0, gamma=True,
-        initialisation=initialisation, incentive_count=incentive_count, incentive_amount=incentive_amount,
-        incentive_strategy=incentive_strategy)
+    while True:
+        G, node_degrees = create_connected_network(
+            size_network, connectivity_prob, random_seed, Vh=Vh, homophily=False, homophily_strength=0.01,
+            initiators=int(initiators*size_network), node_degree=0, gamma=True,
+            initialisation=initialisation, incentive_count=incentive_count, incentive_amount=incentive_amount,
+            incentive_strategy=incentive_strategy)
 
-    model = GameModel(num_agents=size_network, network=G, node_degrees=node_degrees, Vl=Vl, p=p)
+        model = GameModel(num_agents=size_network, network=G, node_degrees=node_degrees, Vl=Vl, p=p)
 
-    for step in range(model_steps):
-        model.step()
+        for step in range(model_steps):
+            model.step()
 
-    pct_norm_abandonment = model.pct_norm_abandonmnet[-1]
+        pct_norm_abandonment = model.pct_norm_abandonmnet[-1]
 
-    if pct_norm_abandonment != 100:
-        incentive_amount += 10
-        print("not 100, so starting while loop")
-        while True:
-            G, node_degrees = create_connected_network(
-                size_network, connectivity_prob, random_seed, Vh=Vh, homophily=False, homophily_strength=0.01,
-                initiators=int(initiators*size_network), node_degree=0, gamma=True,
-                initialisation=initialisation, incentive_count=incentive_count, incentive_amount=incentive_amount,
-                incentive_strategy=incentive_strategy)
+        if pct_norm_abandonment != 100:
+            incentive_amount += 10
+            print("not 100, so starting while loop")
+            while True:
+                G, node_degrees = create_connected_network(
+                    size_network, connectivity_prob, random_seed, Vh=Vh, homophily=False, homophily_strength=0.01,
+                    initiators=int(initiators*size_network), node_degree=0, gamma=True,
+                    initialisation=initialisation, incentive_count=incentive_count, incentive_amount=incentive_amount,
+                    incentive_strategy=incentive_strategy)
 
-            model = GameModel(num_agents=size_network, network=G, node_degrees=node_degrees, Vl=Vl, p=p)
+                model = GameModel(num_agents=size_network, network=G, node_degrees=node_degrees, Vl=Vl, p=p)
 
-            for step in range(model_steps):
-                model.step()
+                for step in range(model_steps):
+                    model.step()
 
-            pct_norm_abandonment = model.pct_norm_abandonmnet[-1]
+                pct_norm_abandonment = model.pct_norm_abandonmnet[-1]
 
-            print("pct_norm_abandonment: " + str(pct_norm_abandonment))
-            # Check if everyone has abandoned the norm
-            if pct_norm_abandonment == 100:
-                print("has entered, successful result")
-                results.append((incentive_count/size_network, incentive_amount*incentive_count))
-                break_outer = True
-                last_incentive = incentive_amount
-                break
-            else:
-                incentive_amount += 10
-                print("current incentive amount = " + str(incentive_amount))
+                print("pct_norm_abandonment: " + str(pct_norm_abandonment))
+                # Check if everyone has abandoned the norm
+                if pct_norm_abandonment == 100:
+                    print("has entered, successful result")
+                    results.append(((incentive_count/size_network), (incentive_amount*incentive_count)))
+                    break_outer = True
+                    last_incentive = incentive_amount
+                    break
+                else:
+                    incentive_amount += 10
+                    print("current incentive amount = " + str(incentive_amount))
 
-    if break_outer:
-        continue
-    else:
-        if pct_norm_abandonment == 100 and incentive_count == int(list(reversed(incentive_count_values))[0]*size_network):
-            print("has entered for " + str(incentive_count))
-            # TODO, PROBABLY LOWER IT
-            results.append((incentive_count, 0))
+        if break_outer:
+            break
+
+        if incentive_amount > 0:
+            incentive_amount -= 50
         else:
-            print("pct is == 100 for incentive_count " + str(incentive_count))
+            results.append((incentive_count/size_network, 0))
+            last_incentive = 0
+            break
 
 # Plot the results
 incentive_count_values_plot = [ic for ic, ia in results]
@@ -97,5 +100,5 @@ plt.plot(incentive_count_values_plot, incentive_amount_values, marker='o')
 
 plt.ylabel("Incentive Amount")
 plt.xlabel("Percentage who receive an incentive")
-plt.title("Incentive Amount as a Function of Incentive Initiators Count (for p={})".format(p))
+plt.title("Incentive Amount as a Function of Incentive Initiators Count")
 plt.show()

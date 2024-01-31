@@ -14,7 +14,7 @@ from src.model import GameModel
 
 # Parameters
 size_network = 1000
-connectivity_prob = 0.5
+connectivity_prob = 0.1
 random_seed = 123
 model_steps = 15
 Vh = 11

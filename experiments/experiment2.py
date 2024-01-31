@@ -32,7 +32,7 @@ for p in p_values:
     for initiator_prob in initiator_probs:
         G, node_degrees = create_connected_network(
             size_network, connectivity_prob, random_seed, Vh=Vh, homophily=False, homophily_strength=0.01,
-            initiators=(int(initiator_prob * size_network)), node_degree=0, gamma=False, initialisation="Highest_degree",
+            initiators=(int(initiator_prob * size_network)), node_degree=0, gamma=True, initialisation="Random",
             incentive_count = 0, incentive_amount = 0, incentive_strategy="Highest_degree")
 
         model = GameModel(num_agents=size_network, network=G, node_degrees=node_degrees, Vl=Vl, p=p)
@@ -40,7 +40,7 @@ for p in p_values:
         for step in range(model_steps):
             model.step()
 
-        final_cascade_size = model.get_final_cascade_size_scaled() / size_network
+        final_cascade_size = model.get_final_cascade_size() / size_network
 
         results[p].append((initiator_prob, final_cascade_size))
 

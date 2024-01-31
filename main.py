@@ -11,10 +11,23 @@ random_seed = 123
 model_steps = 25
 Vh=11
 Vl = 8
-p = 7
+p = 8
+
+initiators = 0.20
+
+incentive_strategy = "Random"
+initialisation = "Random"
+incentive_count_values = np.linspace(0.1, 0.80, 20)
+
+incentive_count =  int(0.1 * size_network)
+incentive_amount = 0
 
 # Generate a connected no_gamma network
-G, node_degrees = create_connected_network(size_network, connectivity_prob, random_seed, Vh=Vh, homophily=False, homophily_strength=0.01, initiators=244, node_degree=0, gamma=True, initialisation="Lowest_degree", incentive_count = 0, incentive_amount = 0, incentive_strategy="Highest_degree")
+G, node_degrees = create_connected_network(
+            size_network, connectivity_prob, random_seed, Vh=Vh, homophily=False, homophily_strength=0.01,
+            initiators=int(initiators*size_network), node_degree=0, gamma=True,
+            initialisation=initialisation, incentive_count=incentive_count, incentive_amount=incentive_amount,
+            incentive_strategy=incentive_strategy)
 
 # Create the model
 model = GameModel(num_agents=size_network, network=G, node_degrees= node_degrees, Vl=Vl, p=p)
@@ -24,13 +37,13 @@ for step in range(model_steps):
     model.step()
 
     # Get the network with colors
-    #network_data = model.get_network_with_colors()
+    network_data = model.get_network_with_colors()
 
     # Plot the network
-    #plt.figure()
-    #plt.title(f'Step {step}')
-    #nx.draw(network_data["graph"], network_data["pos"], node_color=network_data["colors"], labels=network_data["alpha_values"])
-    #plt.show()
+    plt.figure()
+    plt.title(f'Step {step}')
+    nx.draw(network_data["graph"], network_data["pos"], node_color=network_data["colors"], labels=network_data["gamma_values"])
+    plt.show()
 
 # Plotting
 plt.plot(range(1, model_steps + 1), model.pct_norm_abandonmnet, marker='o')
