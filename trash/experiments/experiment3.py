@@ -90,14 +90,14 @@ for p in p_values:
             results.append((0, tipping_threshold))
             break
 
-# Plot the results
+# Plot the figures
 initiator_probabilities = [initiator_count for initiator_count, tipping_threshold in results]
 tipping_thresholds = [tipping_threshold for initiator_count, tipping_threshold in results]
 
-file_path = "results.txt"
+file_path = "figures.txt"
 np.savetxt(file_path, results, header="Initiator Probability Tipping Threshold", comments="")
 
-# Plot the results
+# Plot the figures
 plt.plot(tipping_thresholds, initiator_probabilities, marker='o')
 
 plt.ylabel("Initiator Probability")

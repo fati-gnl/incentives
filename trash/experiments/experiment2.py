@@ -21,7 +21,7 @@ Vh = 11
 Vl = 8
 p = 8
 
-# Initialize list to store results
+# Initialize list to store figures
 p_values = [5,6,8,10]
 results = {p: [] for p in p_values}
 

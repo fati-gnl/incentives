@@ -20,7 +20,7 @@ initialisation = "Random"
 incentive_count_values = np.linspace(0.1, 0.80, 20)
 
 incentive_count =  int(0.1 * size_network)
-incentive_amount = 0
+incentive_amount = 100000
 
 # Generate a connected no_gamma network
 G, node_degrees = create_connected_network(
@@ -52,15 +52,15 @@ plt.ylabel('Percentage Adopt New Technology')
 plt.title('Percentage of Agents Adopting New Technology Over Time')
 plt.show()
 
-# Initialize list to store results
-#results = []
+# Initialize list to store figures
+#figures = []
 
 # Loop through different initial degrees
 #for initial_degree in np.unique(list(node_degrees.values())):
     #pct_abandonment = model.run_model_for_initial_degree(initial_degree)
-    #results.append((initial_degree, pct_abandonment))
+    #figures.append((initial_degree, pct_abandonment))
 
-#x_values, y_values = zip(*results)
+#x_values, y_values = zip(*figures)
 
 # Plotting
 #plt.plot(x_values, y_values, marker='o')

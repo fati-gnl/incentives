@@ -88,14 +88,14 @@ for incentive_count in list(reversed(incentive_count_values)):
             last_incentive = 0
             break
 
-# Plot the results
+# Plot the figures
 incentive_count_values_plot = [ic for ic, ia in results]
 incentive_amount_values = [ia for ic, ia in results]
 
 file_path = "results_experiment4.txt"
 np.savetxt(file_path, results, header="Incentive Initiators Count vs Incentive Amount", comments="")
 
-# Plot the results
+# Plot the figures
 plt.plot(incentive_count_values_plot, incentive_amount_values, marker='o')
 
 plt.ylabel("Incentive Amount")
