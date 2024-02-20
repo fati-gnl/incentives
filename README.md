@@ -19,13 +19,17 @@ The project directory includes the following key files:
 
 ````
 network-dynamics/
-|-- main.py
-|-- model.py
-|-- agent.py
-|-- network_creation.py
+|-- Experiments
+|-- Figures
+    |-- Barabasi
+    |-- Erdos-Renyi
+    |-- Homophily
+|-- src
+    |-- Utils
+    |-- model.py
+    |-- network_creation.py
 |-- requirements.txt
 |-- README.md
-|-- ...
 ````
 ## Dependencies
 
