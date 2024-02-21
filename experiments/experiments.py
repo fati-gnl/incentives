@@ -2,7 +2,7 @@
 Experiments.py
 
 This script conducts experiments to analyze the effect of different incentive distribution strategies and different total incentive
-amounts on the number of agents who receive an incentive
+amounts on the number of agents who receive an incentive.
 """
 import csv
 import matplotlib.pyplot as plt
@@ -85,10 +85,6 @@ def run_experiment_for_strategy(incentive_strategy, G, total_to_distribute_value
             num_agents=size_network, network=G, Vl=Vl, p=p,
             total_to_distribute=total_to_distribute, seed=random_seed, incentive_strategy=incentive_strategy, beta=beta
         )
-
-        # Run the model
-        #for step in range(model_steps):
-           # model.step()
 
         model.step(max_steps = model_steps)
 

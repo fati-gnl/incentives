@@ -2,11 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="081ddcc5-172d-483c-a94d-623e79b0b7e7" name="Changes" comment="Organised files and comments">
-      <change afterPath="$PROJECT_DIR$/figures/img_3.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pseudo_code/homophily_creation.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pseudo_code/timeunit_function.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pseudo_code/update_strategy.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/experiment1.py" beforeDir="false" afterPath="$PROJECT_DIR$/experiments/experiment1.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/experiments/experiments.py" beforeDir="false" afterPath="$PROJECT_DIR$/experiments/experiments.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -233,7 +229,7 @@
       <workItem from="1706196251394" duration="103875000" />
       <workItem from="1707210115142" duration="115420000" />
       <workItem from="1708159435800" duration="1073000" />
-      <workItem from="1708246291141" duration="35893000" />
+      <workItem from="1708246291141" duration="35958000" />
     </task>
     <task id="LOCAL-00001" summary="First version of the model.">
       <created>1706092915188</created>
@@ -326,7 +322,14 @@
       <option name="project" value="LOCAL" />
       <updated>1708509318439</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="Organised files and comments">
+      <created>1708509640647</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1708509640647</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
