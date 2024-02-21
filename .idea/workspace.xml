@@ -2,9 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="081ddcc5-172d-483c-a94d-623e79b0b7e7" name="Changes" comment="Organised files and comments">
-      <change beforePath="$PROJECT_DIR$/.idea/incentives.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/incentives.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/experiments/experiment1.py" beforeDir="false" afterPath="$PROJECT_DIR$/experiments/experiment1.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/experiments/experiments.py" beforeDir="false" afterPath="$PROJECT_DIR$/experiments/experiments.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/figures/Erdos-Renyi/Uniform/incentive_levels.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/figures/Erdos-Renyi/Uniform/n_agents_incentivised.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/model.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/network_creation.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/network_creation.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -30,6 +34,7 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="PUSH_AUTO_UPDATE" value="true" />
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
     <option name="UPDATE_TYPE" value="REBASE" />
   </component>
@@ -60,14 +65,14 @@
       <recent name="$PROJECT_DIR$/new_model" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/figures/Erdos-Renyi/Uniform" />
+      <recent name="$PROJECT_DIR$/figures/Barabasi/Uniform" />
+      <recent name="$PROJECT_DIR$/figures/Barabasi/BiModal" />
+      <recent name="$PROJECT_DIR$/figures/Barabasi/Normal" />
       <recent name="$PROJECT_DIR$/trash" />
-      <recent name="$PROJECT_DIR$/figures" />
-      <recent name="$PROJECT_DIR$/figures/new_model/Homophily/BiModal" />
-      <recent name="$PROJECT_DIR$/figures/new_model/Homophily/Uniform" />
-      <recent name="$PROJECT_DIR$/figures/new_model/Homophily/Normal" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.experiments">
+  <component name="RunManager" selected="Python.experiment1">
     <configuration name="Interpreter" type="PythonConfigurationType" factoryName="Python">
       <module name="incentives" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -210,9 +215,9 @@
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.experiment1" />
         <item itemvalue="Python.experiments" />
         <item itemvalue="Python.model" />
-        <item itemvalue="Python.experiment1" />
         <item itemvalue="Python.network_creation" />
       </list>
     </recent_temporary>
@@ -230,7 +235,7 @@
       <workItem from="1706196251394" duration="103875000" />
       <workItem from="1707210115142" duration="115420000" />
       <workItem from="1708159435800" duration="1073000" />
-      <workItem from="1708246291141" duration="26466000" />
+      <workItem from="1708246291141" duration="35219000" />
     </task>
     <task id="LOCAL-00001" summary="First version of the model.">
       <created>1706092915188</created>
@@ -295,7 +300,21 @@
       <option name="project" value="LOCAL" />
       <updated>1708437192337</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="Organised files and comments">
+      <created>1708437445488</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1708437445488</updated>
+    </task>
+    <task id="LOCAL-00011" summary="Organised files and comments">
+      <created>1708440789523</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1708440789524</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -320,12 +339,13 @@
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/incentives$distributions__1_.coverage" NAME="distributions (1) Coverage Results" MODIFIED="1707818118852" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/trash/src/utils" />
+    <SUITE FILE_PATH="coverage/incentives$experiments.coverage" NAME="experiments Coverage Results" MODIFIED="1708506701218" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/experiments" />
     <SUITE FILE_PATH="coverage/incentives$network_animation.coverage" NAME="distributions Coverage Results" MODIFIED="1706103369446" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/incentives$experiment6.coverage" NAME="experiment6 Coverage Results" MODIFIED="1707291385936" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/new_model" />
     <SUITE FILE_PATH="coverage/incentives$experiment1_random.coverage" NAME="experiment1 Coverage Results" MODIFIED="1706692126866" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/incentives$experiment2.coverage" NAME="experiment2 Coverage Results" MODIFIED="1706697926430" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/experiments" />
     <SUITE FILE_PATH="coverage/incentives$experiment5_test.coverage" NAME="experiment5_test Coverage Results" MODIFIED="1707213711423" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/new_model" />
-    <SUITE FILE_PATH="coverage/incentives$experiment1.coverage" NAME="experiment1 Coverage Results" MODIFIED="1708345288865" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/experiments" />
+    <SUITE FILE_PATH="coverage/incentives$experiment1.coverage" NAME="experiment1 Coverage Results" MODIFIED="1708508812262" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/experiments" />
     <SUITE FILE_PATH="coverage/incentives$model.coverage" NAME="model Coverage Results" MODIFIED="1708349146293" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
     <SUITE FILE_PATH="coverage/incentives$experiment5.coverage" NAME="experiment5 Coverage Results" MODIFIED="1707401905585" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/new_model" />
     <SUITE FILE_PATH="coverage/incentives$network_creation.coverage" NAME="network_creation Coverage Results" MODIFIED="1708331361851" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />

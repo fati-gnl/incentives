@@ -59,7 +59,6 @@ for beta, (sigmoid_inputs, transition_probs) in results:
 plt.xlabel('Sigmoid Input')
 plt.ylabel('Transition Probability')
 plt.title('Effect of Beta on Transition Probability')
-plt.xlim(-100,100)
 plt.legend()
 plt.grid(True)
 # Show the plot

@@ -5,11 +5,8 @@ This file defines the GameModel class, a model representing the dynamics of agen
 Agents interact with their neighbors, updating their strategies based on payoff calculations and individual thresholds.
 
 Methods:
-    - generate_truncated_normal: Generate Vh values from a truncated normal distribution.
-    - get_network_with_colors: Return the network with node colors based on agents' strategies.
-    - step: Execute one step of the model, updating agent strategies and collecting data.
-    - get_final_cascade_size_scaled: Get the final cascade size considering only non-initiator agents.
-    - get_final_cascade_size: Get the final cascade size considering all agents.
+    - generate_distribution: Generate Vh values from a given distribution.
+    - step: Execute different step of the model until a maximum predefined step has reached, or no changes have been found for a consecutive number of rounds.
 """
 import networkx as nx
 import numpy as np
@@ -74,12 +71,14 @@ class GameModel():
 
         np.random.seed(self.seed)
 
+        # Initialize arrays with the agents properties
         self.gamma_values = np.array(list(nx.get_node_attributes(self.network, 'gamma').values()))
         self.current_strategies = np.array(list(nx.get_node_attributes(self.network, 'strategy').values()))
         self.incentives = np.zeros(num_agents)
         self.total_incentives_ot = np.zeros(num_agents)
         self.probabilities_informed = np.zeros(num_agents)
 
+        # Get the adjacent matrix for the neighbours
         self.adjacency_matrix = nx.to_numpy_matrix(self.network)
 
         self.sorted_nodes = sort_by_incentive_dist(self.network, self.seed, self.incentive_strategy)
@@ -98,7 +97,7 @@ class GameModel():
         self.timesteps_95 = 0
 
     @staticmethod
-    def generate_truncated_normal(lower_bound: float, upper_bound: float, size: int, entitled_distribution: str) -> np.ndarray:
+    def generate_distribution(lower_bound: float, upper_bound: float, size: int, entitled_distribution: str) -> np.ndarray:
         """
         Generate values from a truncated normal distribution.
         :param float lower_bound: Lower bound for the truncated distribution.
@@ -162,7 +161,6 @@ class GameModel():
         beta = self.beta
 
         if self.current_strategies[agent_id] == "Stick to Traditional":
-        #    if current_payoff <= payoff_new:
             sigmoid_input = (payoff_new - current_payoff) * beta
             transition_prob = round(1 / (1 + np.exp(-sigmoid_input)),4)
 
@@ -176,7 +174,6 @@ class GameModel():
                 else:
                     self.number_of_incentivised += 1
         elif self.current_strategies[agent_id] == "Adopt New Technology":
-        #    if current_payoff < payoff_traditional:
              sigmoid_input = (payoff_traditional- current_payoff) * beta
              transition_prob = round(1 / (1 + np.exp(-sigmoid_input)),4)
              if random.random() < transition_prob:
@@ -253,63 +250,3 @@ class GameModel():
                 remaining_steps = max_steps - step_count - 1
                 self.pct_norm_abandonmnet.extend([pct_norm_abandonmnet] * remaining_steps)
                 break
-
-    # def get_final_cascade_size_scaled(self):
-    #     """
-    #     Get the final cascade size considering only non-initiator agents.
-    #     :return: cascade size
-    #     """
-    #     # Get all recorded data
-    #     all_data = self.datacollector.get_agent_vars_dataframe()
-    #
-    #     # Identify agents whose strategy changed to "Adopt New Technology" at least once
-    #     changed_agents = all_data[
-    #         (all_data["Strategy"] == "Adopt New Technology") & (all_data["Initiator"] == False)
-    #         ]
-    #
-    #     unique_changed_agents = changed_agents.drop_duplicates(subset=["Identifier"])
-    #
-    #     # Calculate cascade size (number of unique agents)
-    #     cascade_size = len(unique_changed_agents)
-    #     return cascade_size
-
-    # def get_final_cascade_size(self):
-    #     """
-    #     Get the final cascade size considering all agents.
-    #     :return: cascade size
-    #     """
-    #     # Get all recorded data
-    #     all_data = self.datacollector.get_agent_vars_dataframe()
-    #
-    #     # Identify agents whose strategy changed to "Adopt New Technology" at least once
-    #     changed_agents = all_data[
-    #         (all_data["Strategy"] == "Adopt New Technology")
-    #         ]
-    #
-    #     unique_changed_agents = changed_agents.drop_duplicates(subset=["Identifier"])
-    #
-    #     # Calculate cascade size (number of unique agents)
-    #     cascade_size = len(unique_changed_agents)
-    #     return cascade_size
-
-    # def calculate_lorenz_curve(self):
-    #     """
-    #     Calculate the Lorenz curve for the current distribution of incentives.
-    #     """
-    #     incentives = self.datacollector.get_agent_vars_dataframe()["Incentive"].values
-    #
-    #     sorted_incentives = np.sort(incentives)
-    #
-    #     cumulative_percentage = np.cumsum(sorted_incentives) / np.sum(sorted_incentives)
-    #
-    #     return cumulative_percentage
-
-    # def get_network_with_colors(self):
-    # """
-    # Return the network with node colors based on agents' strategies.
-    #:return: Dictionary containing network graph and node colors.
-    # """
-    # color_map = {"Stick to Traditional": "red", "Adopt New Technology": "green"}
-    # colors = [color_map[agent.strategy] for agent in self.schedule.agents]
-    # gamma_values = {agent.unique_id: f'{agent.gamma:.2f}' for agent in self.schedule.agents}
-    # return {"graph": self.network, "pos": self.pos, "colors": colors, "gamma_values": gamma_values}

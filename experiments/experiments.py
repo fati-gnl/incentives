@@ -24,13 +24,13 @@ p = 8
 beta = 99
 
 # Varies per experiment
-entitled_distribution = "BiModal"
-network_type = "Barabasi"
+entitled_distribution = "Uniform"
+network_type = "Erdos_Renyi"
 
 if network_type == "Erdos_Renyi":
-    total_to_distribute_values = np.linspace(45000, 80000, 30)
+    total_to_distribute_values = np.linspace(35000, 70000, 30)
 elif network_type == "Barabasi":
-    total_to_distribute_values = np.linspace(20000, 55000, 30)
+    total_to_distribute_values = np.linspace(35000, 80000, 30)
 elif network_type == "Homophily":
     total_to_distribute_values = np.linspace(25000, 80000, 40)
 
