@@ -21,7 +21,7 @@ model_steps = 15
 Vh = 11
 Vl = 8
 p = 8
-betas = [1000,100,10,1,0.1,0.001]
+betas = [1]
 
 # Different values for total_to_distribute
 #total_to_distribute_values = np.linspace(75000, 75000, 1)
