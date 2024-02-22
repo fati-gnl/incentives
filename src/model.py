@@ -189,8 +189,6 @@ class GameModel():
             new_tech_count = 0
 
             total = self.total_to_distribute
-            print("total to distribute: " + str(total))
-
             initial_strategies = np.copy(self.current_strategies)
 
             for _ in range(self.num_agents):

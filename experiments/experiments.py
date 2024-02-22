@@ -19,6 +19,9 @@ import multiprocessing as mp
 from functools import partial
 import time
 
+st = time.time()
+print("Experiment started")
+
 # Constant parameters for all the experiments
 size_network = 1000
 connectivity_prob = 0.05
@@ -27,7 +30,7 @@ Vh = 11
 Vl = 8
 p = 8
 beta = 99
-num_runs = 2
+num_runs = 5
 np.random.seed(123)
 random_seeds = [np.random.randint(10000) for _ in range(num_runs)]
 
@@ -74,9 +77,6 @@ def run_experiment_for_strategy(incentive_strategy, G, total_to_distribute_value
     :param int model_steps: Number of steps of the model to run
     :return:
     """
-    st = time.time()
-    print("Experiment started for:", incentive_strategy)
-
     results_timesteps_95 = []
     results_spillovers = []
     results_incentivized = []
@@ -85,8 +85,6 @@ def run_experiment_for_strategy(incentive_strategy, G, total_to_distribute_value
 
     # Run experiments for different total_to_distribute values
     for total_to_distribute in total_to_distribute_values:
-        print(f"{incentive_strategy} - Total to distribute: {total_to_distribute}")
-
         model = GameModel(
             num_agents=size_network, network=G, Vl=Vl, p=p,
             total_to_distribute=total_to_distribute, seed=random_seed, incentive_strategy=incentive_strategy, beta=beta
@@ -98,18 +96,13 @@ def run_experiment_for_strategy(incentive_strategy, G, total_to_distribute_value
         inc_per_agent = model.total_incentives_ot
         gini_coeff = calculate_gini_coefficient(inc_per_agent)
 
-        print("Received incentive but did not tranition count: " + str(model.inc_but_no_transition)) if model.inc_but_no_transition != 0 else None
+        print("Received incentive but did not transition count: " + str(model.inc_but_no_transition)) if model.inc_but_no_transition != 0 else None
 
         results_incentivized.append(sum(1 for amount in inc_per_agent if amount != 0))
         results_timesteps_95.append(model.timesteps_95 if model.has_reached_95 else 0)
         results_spillovers.append(spillovers)
         results_norm.append(model.pct_norm_abandonmnet[-1])
         results_gini.append(gini_coeff)
-
-    et = time.time()
-    elapsed_time = et - st
-    print(f"Execution time for {incentive_strategy}: {elapsed_time} seconds")
-    print("Experiment ended for:", incentive_strategy)
 
     # Return the figures for the current strategy
     return (incentive_strategy, results_timesteps_95, results_spillovers, results_incentivized, results_norm, results_gini)
@@ -182,7 +175,7 @@ with open(file_name, mode='w', newline='') as file:
             for value in strategy_data:
                 writer.writerow([metric, strategy_name, value])
 
-def plot_and_save_results(results, filename, ylabel, incentive_strategies):
+def plot_and_save_results(results, filename, xdata, ylabel, incentive_strategies):
     """
     Plot and save the results of each experiment
     """
@@ -191,7 +184,7 @@ def plot_and_save_results(results, filename, ylabel, incentive_strategies):
     plt.title(ylabel)
     for i, data in enumerate(results):
         marker = markers[i % len(markers)]
-        plt.plot(data, marker=marker, label=incentive_strategies[i].replace("_", " ").strip("'[]'"))
+        plt.plot(xdata, data, marker=marker, label=incentive_strategies[i].replace("_", " ").strip("'[]'"))
     plt.xlabel('Incentive level')
     plt.ylabel(ylabel)
     plt.legend()
@@ -203,4 +196,9 @@ ylabels =['Time taken to achieve 95% adoption', 'Number of spillovers', 'Number 
 file_titles = ['time_to_95_adoption', 'number_of_spillovers', 'number_of_agents_incentivized', 'final_state', 'gini']
 
 for i, (metric, results) in enumerate(average_results.items()):
-    plot_and_save_results(results, '{}_{}_{}.png'.format(network_type, entitled_distribution, file_titles[i]), ylabels[i], incentive_strategies)
+    plot_and_save_results(results, '{}_{}_{}3.png'.format(network_type, entitled_distribution, file_titles[i]), total_to_distribute_values, ylabels[i], incentive_strategies)
+
+et = time.time()
+elapsed_time = et - st
+print(f"Execution time for {incentive_strategy}: {elapsed_time} seconds")
+print("Experiment ended for:", incentive_strategy)
