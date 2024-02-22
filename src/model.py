@@ -89,12 +89,13 @@ class GameModel():
 
         # Metrics that I am keeping track of for the experiments
         self.pct_norm_abandonmnet = []
-        self.number_of_incentivised = 0
         self.incentive_amounts = []
         self.transition_probs = []
         self.sigmoid_inputs = []
-        self.spillovers = 0
         self.timesteps_95 = 0
+        self.has_reached_95 = False
+        self.spillovers = 0
+        self.inc_but_no_transition = 0
 
     @staticmethod
     def generate_distribution(lower_bound: float, upper_bound: float, size: int, entitled_distribution: str) -> np.ndarray:
@@ -169,10 +170,6 @@ class GameModel():
 
             if random.random() < transition_prob:
                 self.current_strategies[agent_id] = "Adopt New Technology"
-                if self.incentives[agent_id] == 0:
-                    self.spillovers += 1
-                else:
-                    self.number_of_incentivised += 1
         elif self.current_strategies[agent_id] == "Adopt New Technology":
              sigmoid_input = (payoff_traditional- current_payoff) * beta
              transition_prob = round(1 / (1 + np.exp(-sigmoid_input)),4)
@@ -199,9 +196,12 @@ class GameModel():
             for _ in range(self.num_agents):
 
                 if((np.count_nonzero(self.current_strategies == "Adopt New Technology") / 1000) >= 0.95):
-                    pass
+                    self.has_reached_95 = True
                 else:
-                    self.timesteps_95 += 1
+                    if self.has_reached_95:
+                        pass
+                    else:
+                        self.timesteps_95 += 1
 
                 agent_id = random.randint(0, self.num_agents - 1)
                 neighbors = np.nonzero(self.adjacency_matrix[agent_id])[1]
@@ -239,6 +239,9 @@ class GameModel():
             self.pct_norm_abandonmnet.append(pct_norm_abandonmnet)
 
             self.total_to_distribute -= (self.total_to_distribute - total)
+
+            self.spillovers = sum((self.current_strategies == "Adopt New Technology") & (self.incentives == 0))
+            self.inc_but_no_transition = np.sum((self.incentives > 0) & (self.current_strategies == "Stick to Traditional"))
 
             # Check if in this timeunit, anything has changed. If there are three timeunits with no changes, the simulation can end.
             if np.array_equal(initial_strategies, self.current_strategies) :

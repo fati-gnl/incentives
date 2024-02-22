@@ -19,7 +19,7 @@ def add_homophily_edges(G, gamma_values):
     :param nx.Graph G: The graph to add edges to.
     :param dict gamma_values: A dictionary mapping node indices to gamma values.
     """
-    homophily_strength = 8.2
+    homophily_strength = 6.55
     for node1 in G.nodes():
         for node2 in G.nodes():
             if node1 != node2 and not G.has_edge(node1, node2):
@@ -102,4 +102,4 @@ def create_connected_network(size, connectivity, seed, Vh, gamma, type, entitled
 
     return G
 
-# create_connected_network(size=1000, connectivity=0.05, seed=123, Vh=11, gamma=True, type="Homophily", entitled_distribution="Uniform")
+# create_connected_network(size=1000, connectivity=0.05, seed=15, Vh=11, gamma=True, type="Homophily", entitled_distribution="Uniform")

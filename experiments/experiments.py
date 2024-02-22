@@ -1,8 +1,14 @@
 """
 Experiments.py
 
-This script conducts experiments to analyze the effect of different incentive distribution strategies and different total incentive
-amounts on the number of agents who receive an incentive.
+This script runs all of the different experiments built to analyze the effect of different incentive amounts on various factors.
+In addition, it produces the figures corresponding to each result:
+Experiments:
+1. Time taken to achieve 95% adoption
+2. Number of spillovers
+3. Number of agents who received an incentive
+4. Proportion of agents who transitioned
+5. Gini Coefficient
 """
 import csv
 import matplotlib.pyplot as plt
@@ -16,30 +22,31 @@ import time
 # Constant parameters for all the experiments
 size_network = 1000
 connectivity_prob = 0.05
-random_seed = 123
 model_steps = 20
 Vh = 11
 Vl = 8
 p = 8
 beta = 99
+num_runs = 2
+np.random.seed(123)
+random_seeds = [np.random.randint(10000) for _ in range(num_runs)]
 
 # Varies per experiment
-entitled_distribution = "Uniform"
+entitled_distribution = "Normal"
 network_type = "Erdos_Renyi"
 
 if network_type == "Erdos_Renyi":
-    total_to_distribute_values = np.linspace(35000, 70000, 30)
+    total_to_distribute_values = np.linspace(35000, 70000, 2)
 elif network_type == "Barabasi":
     total_to_distribute_values = np.linspace(35000, 80000, 30)
 elif network_type == "Homophily":
     total_to_distribute_values = np.linspace(25000, 80000, 40)
 
 # Create connected network
-G = create_connected_network(size_network, connectivity_prob, random_seed, Vh=Vh, gamma=True, type=network_type, entitled_distribution=entitled_distribution)
+G = create_connected_network(size_network, connectivity_prob, 123, Vh=Vh, gamma=True, type=network_type, entitled_distribution=entitled_distribution)
 
 # Different incentive strategies
 incentive_strategies = ["Random", "Highest_degree", "Lowest_degree", "Highest_gamma", "Lowest_gamma"]
-
 
 def calculate_gini_coefficient(incentives):
     """
@@ -65,13 +72,11 @@ def run_experiment_for_strategy(incentive_strategy, G, total_to_distribute_value
     :param float Vl: Lowest reward for not selecting their preferred strategy.
     :param float p: Penalty for miscoordination with neighbours.
     :param int model_steps: Number of steps of the model to run
-    :return: tuple (incentive_strategy, figures): A tuple containing the incentive strategy and its corresponding figures.
-             Results include pairs of total incentive values and the final adoption percentages.
+    :return:
     """
     st = time.time()
-    print("has started for " + str(incentive_strategy))
+    print("Experiment started for:", incentive_strategy)
 
-    # Results for the current strategy
     results_timesteps_95 = []
     results_spillovers = []
     results_incentivized = []
@@ -80,105 +85,113 @@ def run_experiment_for_strategy(incentive_strategy, G, total_to_distribute_value
 
     # Run experiments for different total_to_distribute values
     for total_to_distribute in total_to_distribute_values:
-        print(str(incentive_strategy) + " " + str(total_to_distribute))
+        print(f"{incentive_strategy} - Total to distribute: {total_to_distribute}")
+
         model = GameModel(
             num_agents=size_network, network=G, Vl=Vl, p=p,
             total_to_distribute=total_to_distribute, seed=random_seed, incentive_strategy=incentive_strategy, beta=beta
         )
-
         model.step(max_steps = model_steps)
 
         # Collect figures
-        incentive_count = model.number_of_incentivised
         spillovers = model.spillovers
         inc_per_agent = model.total_incentives_ot
-
         gini_coeff = calculate_gini_coefficient(inc_per_agent)
 
-        results_incentivized.append((total_to_distribute, incentive_count))
-        results_timesteps_95.append((total_to_distribute, model.timesteps_95))
-        results_spillovers.append((total_to_distribute, spillovers))
-        results_norm.append((total_to_distribute, model.pct_norm_abandonmnet[-1]))
-        results_gini.append((total_to_distribute, gini_coeff))
+        print("Received incentive but did not tranition count: " + str(model.inc_but_no_transition)) if model.inc_but_no_transition != 0 else None
 
+        results_incentivized.append(sum(1 for amount in inc_per_agent if amount != 0))
+        results_timesteps_95.append(model.timesteps_95 if model.has_reached_95 else 0)
+        results_spillovers.append(spillovers)
+        results_norm.append(model.pct_norm_abandonmnet[-1])
+        results_gini.append(gini_coeff)
 
     et = time.time()
     elapsed_time = et - st
-    print('Execution time:', elapsed_time, 'seconds')
-    print("has ended for " + str(incentive_strategy))
+    print(f"Execution time for {incentive_strategy}: {elapsed_time} seconds")
+    print("Experiment ended for:", incentive_strategy)
 
     # Return the figures for the current strategy
     return (incentive_strategy, results_timesteps_95, results_spillovers, results_incentivized, results_norm, results_gini)
 
-# Number of processes to use
 num_processes = mp.cpu_count()
-
-# Split incentive strategies into chunks
 chunks = np.array([[strategy] for strategy in incentive_strategies])
 
-# Define a partial function to pass fixed arguments to run_experiment_for_strategy
-partial_func = partial(
-    run_experiment_for_strategy,
-    G = G,
-    total_to_distribute_values=total_to_distribute_values,
-    size_network=size_network,
-    random_seed=random_seed,
-    Vl=Vl,
-    p=p,
-    model_steps=model_steps,
-    beta=beta
-)
+results_all_sim = {'tm': [],'s': [],'inc': [],'count': [],'gini': []}
 
 # Run experiments for each chunk of incentive strategies in parallel
-with mp.Pool(processes=num_processes) as pool:
-    results = pool.map(partial_func, chunks)
+for i in range(num_runs):
 
-# Saving and combining the figures from all processes
-results_tm = []
-results_s = []
-results_inc = []
-results_count = []
-results_gini = []
+    partial_func = partial(
+        run_experiment_for_strategy,
+        G=G,
+        total_to_distribute_values=total_to_distribute_values,
+        size_network=size_network,
+        random_seed= random_seeds[i],
+        Vl=Vl,
+        p=p,
+        model_steps=model_steps,
+        beta=beta
+    )
+    with mp.Pool(processes=num_processes) as pool:
+        results = pool.map(partial_func, chunks)
 
-for result in results:
-    incentive_strategy = result[0]
-    timesteps_95, spillovers, incentivized, count, gini = result[1:]
-    results_tm.append((incentive_strategy, timesteps_95))
-    results_s.append((incentive_strategy, spillovers))
-    results_inc.append((incentive_strategy, incentivized))
-    results_count.append((incentive_strategy, count))
-    results_gini.append((incentive_strategy, gini))
+    for i, result in enumerate(results):
+        incentive_strategy = result[0]
+        timesteps_95, spillovers, incentivized, count, gini = result[1:]
 
+        results_all_sim['tm'].append((incentive_strategy, timesteps_95))
+        results_all_sim['s'].append((incentive_strategy, spillovers))
+        results_all_sim['inc'].append((incentive_strategy, incentivized))
+        results_all_sim['count'].append((incentive_strategy, count))
+        results_all_sim['gini'].append((incentive_strategy, gini))
+
+def calculate_average_values(data):
+    """
+    Calculate the average values for each incentive level across multiple runs.
+    """
+    strategy_names = ["Random", "Highest_degree", "Lowest_degree", "Highest_gamma", "Lowest_gamma"]
+    strategy_data = [[] for _ in range(len(strategy_names))]
+
+    for simulation in data:
+        strategy_name = simulation[0][0]
+        index = strategy_names.index(strategy_name)
+        strategy_data[index].extend([simulation[1]])
+
+    averaged_data = []
+    for values in strategy_data:
+        averaged_data.append([sum(x) / len(x) for x in zip(*values)])
+
+    return averaged_data
+
+# Calculate average values for each metric
+average_results = {}
+for metric, results in results_all_sim.items():
+    average_results[metric] = calculate_average_values(results)
 
 file_name = "results_{}_{}.txt".format(network_type, entitled_distribution)
 
 with open(file_name, mode='w', newline='') as file:
     writer = csv.writer(file)
-    result_data = [
-        ("Time taken to achieve 95% adoption", results_tm),
-        ("Number of spillovers", results_s),
-        ("Number of agents incentivized", results_inc),
-        ("Incentive count", results_count),
-        ("Gini coefficient", results_gini)
-    ]
+    header = ["Metric", "Incentive Strategy", "Average Value"]
+    writer.writerow(header)
 
-    for header, result_list in result_data:
-        writer.writerow(["Incentive Strategy", "Total to Distribute", header])
-        for strategy, data in result_list:
-            for total, value in data:
-                writer.writerow([strategy, total, value])
+    for metric, results in average_results.items():
+        for i, strategy_data in enumerate(results):
+            strategy_name = incentive_strategies[i]
+            for value in strategy_data:
+                writer.writerow([metric, strategy_name, value])
 
-def plot_and_save_results(results, filename, ylabel):
+def plot_and_save_results(results, filename, ylabel, incentive_strategies):
     """
     Plot and save the results of each experiment
     """
     markers = ['s', '^', 'D', 'v', 'o']
     plt.figure(figsize=(8, 6))
     plt.title(ylabel)
-    for i, (incentive_strategy, results_data) in enumerate(results):
-        total_to_distribute_values, data = zip(*results_data)
+    for i, data in enumerate(results):
         marker = markers[i % len(markers)]
-        plt.plot(total_to_distribute_values, data, marker=marker, label=incentive_strategy[0].replace("_", " ").strip("'[]'"))
+        plt.plot(data, marker=marker, label=incentive_strategies[i].replace("_", " ").strip("'[]'"))
     plt.xlabel('Incentive level')
     plt.ylabel(ylabel)
     plt.legend()
@@ -186,8 +199,8 @@ def plot_and_save_results(results, filename, ylabel):
     plt.savefig(filename)
     plt.close()
 
-plot_and_save_results(results_tm,'{}_{}_time_to_95_adoption.png'.format(network_type, entitled_distribution), 'Time taken to achieve 95% adoption')
-plot_and_save_results(results_s,'{}_{}_number_of_spillovers.png'.format(network_type, entitled_distribution), 'Number of spillovers')
-plot_and_save_results(results_inc,'{}_{}_number_of_agents_incentivized.png'.format(network_type, entitled_distribution), 'Number of agents incentivized')
-plot_and_save_results(results_count,'{}_{}_final_state.png'.format(network_type, entitled_distribution), 'Final state, x(F)')
-plot_and_save_results(results_gini,'{}_{}_gini.png'.format(network_type, entitled_distribution), 'Gini Coefficient')
+ylabels =['Time taken to achieve 95% adoption', 'Number of spillovers', 'Number of agents incentivized', 'Final state, x(F)', 'Gini Coefficient']
+file_titles = ['time_to_95_adoption', 'number_of_spillovers', 'number_of_agents_incentivized', 'final_state', 'gini']
+
+for i, (metric, results) in enumerate(average_results.items()):
+    plot_and_save_results(results, '{}_{}_{}.png'.format(network_type, entitled_distribution, file_titles[i]), ylabels[i], incentive_strategies)
