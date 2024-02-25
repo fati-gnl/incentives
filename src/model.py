@@ -22,25 +22,30 @@ def sort_by_incentive_dist(G, seed, incentive_strategy):
     """
     random.seed(seed)
 
-    # Filter out nodes with strategy "Adopt New Technology"
-    filtered_nodes = [node for node, data in G.nodes(data=True) if data['strategy'] == "Stick to Traditional"]
-
     if incentive_strategy == "Random":
-        sorted_nodes = random.sample(filtered_nodes, len(filtered_nodes))
+        sorted_nodes = random.sample(G.nodes(), len(G.nodes()))
     elif incentive_strategy == "Highest_degree":
-        sorted_nodes = sorted(filtered_nodes, key=lambda x: G.degree(x), reverse=True)
+        sorted_nodes = sorted(G.nodes(), key=lambda x: G.degree(x), reverse=True)
     elif incentive_strategy == "Lowest_degree":
-        sorted_nodes = sorted(filtered_nodes, key=lambda x: G.degree(x))
+        sorted_nodes = sorted(G.nodes(), key=lambda x: G.degree(x))
     elif incentive_strategy == "Highest_gamma":
-        sorted_nodes = sorted(filtered_nodes, key=lambda x: G.nodes[x]['gamma'], reverse=True)
+        sorted_nodes = sorted(G.nodes(), key=lambda x: G.nodes[x]['gamma'], reverse=True)
     elif incentive_strategy == "Lowest_gamma":
-        sorted_nodes = sorted(filtered_nodes, key=lambda x: G.nodes[x]['gamma'])
+        sorted_nodes = sorted(G.nodes(), key=lambda x: G.nodes[x]['gamma'])
     elif incentive_strategy == "Closeness_centrality":
-        sorted_nodes = sorted(filtered_nodes, key=lambda x: nx.closeness_centrality(G)[x], reverse=True)
+        sorted_nodes = sorted(G.nodes(), key=lambda x: nx.closeness_centrality(G)[x], reverse=True)
     elif incentive_strategy == "Betweenness_centrality":
-        sorted_nodes = sorted(filtered_nodes, key=lambda x: nx.betweenness_centrality(G)[x], reverse=True)
+        print("has entered")
+        sorted_nodes = sorted(G.nodes(), key=lambda x: nx.betweenness_centrality(G)[x], reverse=True)
+        print("has done it")
     elif incentive_strategy == "Eigenvector_centrality":
-        sorted_nodes = sorted(filtered_nodes, key=lambda x: nx.eigenvector_centrality(G)[x], reverse=True)
+        sorted_nodes = sorted(G.nodes(), key=lambda x: nx.eigenvector_centrality(G)[x], reverse=True)
+    elif incentive_strategy == "High_local_clustering_c":
+        print("has entered")
+        sorted_nodes = sorted(G.nodes(), key=lambda x: nx.clustering(G, x), reverse=True)
+        print("has done it")
+    elif incentive_strategy == "Low_local_clustering_c":
+        sorted_nodes = sorted(G.nodes(), key=lambda x: nx.clustering(G, x))
     else:
         raise ValueError("Invalid incentive strategy")
 
@@ -79,7 +84,7 @@ class GameModel():
         self.probabilities_informed = np.zeros(num_agents)
 
         # Get the adjacent matrix for the neighbours
-        self.adjacency_matrix = nx.to_numpy_matrix(self.network)
+        self.adjacency_matrix = nx.to_numpy_array(self.network)
 
         self.sorted_nodes = sort_by_incentive_dist(self.network, self.seed, self.incentive_strategy)
 
@@ -96,6 +101,31 @@ class GameModel():
         self.has_reached_95 = False
         self.spillovers = 0
         self.inc_but_no_transition = 0
+
+        for i in range(0, self.num_agents - 1):
+            self.calculate_min_adopters_to_transition(i)
+            print("Degree " + str(self.network.degree(i)))
+
+
+    def calculate_min_adopters_to_transition(self, agent_id):
+
+        # Get the number of neighbours of a particular node
+        N = np.sum(self.adjacency_matrix[agent_id] > 0)
+
+        # Set the default value high -> case when even if all neighbours would transition, an incentive would still be needed
+        min_adopters = 9999
+
+        for i in range(N+1):
+            # i = number of adopters of the new technology
+            payoff_new = self.gamma_values[agent_id] * N - self.p * (N-i)
+            payoff_traditional = self.Vl * N - self.p * (i)
+
+            if payoff_new > payoff_traditional:
+                min_adopters = i
+                break
+
+        print("min_adopters " + str(min_adopters))
+        return min_adopters
 
     @staticmethod
     def generate_distribution(lower_bound: float, upper_bound: float, size: int, entitled_distribution: str) -> np.ndarray:
@@ -202,7 +232,7 @@ class GameModel():
                         self.timesteps_95 += 1
 
                 agent_id = random.randint(0, self.num_agents - 1)
-                neighbors = np.nonzero(self.adjacency_matrix[agent_id])[1]
+                neighbors = np.nonzero(self.adjacency_matrix[agent_id])
 
                 num_stick_to_traditional = np.sum(self.current_strategies[neighbors] == "Stick to Traditional")
                 num_adopt_new_tech = np.sum(self.current_strategies[neighbors] == "Adopt New Technology")
@@ -238,8 +268,8 @@ class GameModel():
 
             self.total_to_distribute -= (self.total_to_distribute - total)
 
-            self.spillovers = sum((self.current_strategies == "Adopt New Technology") & (self.incentives == 0))
-            self.inc_but_no_transition = np.sum((self.incentives > 0) & (self.current_strategies == "Stick to Traditional"))
+            self.spillovers = sum((self.current_strategies == "Adopt New Technology") & (self.total_incentives_ot == 0))
+            self.inc_but_no_transition = np.sum((self.total_incentives_ot > 0) & (self.current_strategies == "Stick to Traditional"))
 
             # Check if in this timeunit, anything has changed. If there are three timeunits with no changes, the simulation can end.
             if np.array_equal(initial_strategies, self.current_strategies) :

@@ -61,7 +61,6 @@ def create_connected_network(size, connectivity, seed, Vh, gamma, type, entitled
 
     # If there are nodes without edges, connect them to the network.
     if type != "Homophily":
-        print("has entered")
         while not nx.is_connected(G):
             nodes_to_connect = list(nx.isolates(G))
             if not nodes_to_connect:
@@ -85,20 +84,20 @@ def create_connected_network(size, connectivity, seed, Vh, gamma, type, entitled
     node_degrees = dict(G.degree())
     distinct_degrees = set(node_degrees.values())
 
-    count_list=[]
+    #count_list=[]
 
     # Print distinct degrees and their counts
-    print("Distinct degrees of nodes and their counts:")
-    for degree in distinct_degrees:
-        count = list(node_degrees.values()).count(degree)
-        count_list.append(count)
-        print(f"Degree {degree}: {count} nodes")
+    #print("Distinct degrees of nodes and their counts:")
+    #for degree in distinct_degrees:
+        #count = list(node_degrees.values()).count(degree)
+        #count_list.append(count)
+        #print(f"Degree {degree}: {count} nodes")
 
-    average_degree = np.mean(list(dict(G.degree()).values()))
-    print("Average network degree:", average_degree)
+    #average_degree = np.mean(list(dict(G.degree()).values()))
+    #print("Average network degree:", average_degree)
 
-    total_links = G.number_of_edges()
-    print("Total number of links:", total_links)
+    #total_links = G.number_of_edges()
+    #print("Total number of links:", total_links)
 
     return G
 
