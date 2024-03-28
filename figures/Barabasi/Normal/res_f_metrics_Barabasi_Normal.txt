@@ -1,0 +1,10 @@
+Strategy,Total cost used vs total number of people who have transitioned,Ratio of spillovers achieved to number of agents incentivised,Gini Coefficient,Time taken achieve a 95% transition,Percentage of total amount of money distributed
+Highest_gamma,46.99,1.7,0.8,3842.53,0.93
+Complex_centrality,51.21,2.42,0.84,3558.15,0.95
+Random,54.59,1.71,0.8,3757.5,0.94
+Highest_degree,50.56,2.48,0.85,3504.1,0.94
+Lowest_degree,68.77,0.83,0.65,4583.15,0.91
+Lowest_gamma,62.59,1.67,0.79,3827.95,0.95
+High_local_clustering_c,52.94,1.76,0.8,3795.3,0.96
+Betweenness_centrality,51.28,2.49,0.84,3507.45,0.96
+Spillover,50.03,2.58,0.85,3583.85,0.99

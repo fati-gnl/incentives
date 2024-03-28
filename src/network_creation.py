@@ -12,27 +12,57 @@ import networkx as nx
 import random
 import numpy as np
 from src.model import GameModel
+import matplotlib.pyplot as plt
+import matplotlib
 
-def add_homophily_edges(G, gamma_values):
+#matplotlib.use('Agg')
+
+def create_homophily_network(gamma_values, seed):
     """
-    Add edges to a graph based on homophily condition; how close to each other the gamma values are.
-    :param nx.Graph G: The graph to add edges to.
+    Creates a homophily network based on the selected gamma distribution.
     :param dict gamma_values: A dictionary mapping node indices to gamma values.
+    :param int seed: Seed for random number generator.
     """
-    homophily_strength = 6.55
-    for node1 in G.nodes():
-        for node2 in G.nodes():
-            if node1 != node2 and not G.has_edge(node1, node2):
-                gamma_diff = abs(gamma_values[node1] - gamma_values[node2])
-                probability = 1 - homophily_strength * gamma_diff
-                if random.uniform(0, 1) < probability:
-                    G.add_edge(node1, node2)
+    sorted_gamma_v = np.sort(gamma_values)
+    n_chunks = 20
+
+    # Divide the sorted gamma list into n chunks
+    chunks = np.array_split(sorted_gamma_v, n_chunks)
+    chunk_sizes = [len(chunk) for chunk in chunks]
+
+    p_itself = 0.8
+    p_outside_block = 1 - p_itself
+    probabilities = np.zeros((n_chunks, n_chunks))
+    for i in range(n_chunks):
+        for j in range(n_chunks):
+            if i == j:
+                probabilities[i, j] = p_itself
+            else:
+                probabilities[i, j] = p_outside_block / (n_chunks - 1)
+
+    G = nx.stochastic_block_model(chunk_sizes, probabilities, seed=seed)
+    nx.set_node_attributes(G, "Stick to Traditional", 'strategy')
+    nx.set_node_attributes(G, dict(zip(G.nodes, sorted_gamma_v)), 'gamma')
+
+    #node_colors = [sorted_gamma_v[node] for node in G.nodes()]
+    #node_labels = {node: f"{gamma:.2f}" for node, gamma in zip(G.nodes(), gamma_values)}
+
+    #pos = nx.spring_layout(G)  # Layout for visualization
+    #plt.figure(figsize=(10, 6))
+    #plt.title('Homophily Network Visualization')
+    #nx.draw(G, pos, node_color=node_colors)
+    #nx.draw_networkx_labels(G, pos, labels=node_labels, font_color='black', font_size=8)
+    #plt.savefig("homophily_n.png")
+    #plt.close()
+
+    return G
 
 def network_type(size, connectivity, seed, type):
     if type == "Erdos_Renyi":
         G = nx.erdos_renyi_graph(size, connectivity, seed=seed)
     elif type == "Barabasi":
-        G = nx.barabasi_albert_graph(size, int(0.026*size))
+        G = nx.barabasi_albert_graph(size, int(0.025*size))
+        #G = nx.barabasi_albert_graph(size, 3)
     elif type == "Homophily":
         G = nx.Graph()
         for node in range(size):
@@ -79,26 +109,27 @@ def create_connected_network(size, connectivity, seed, Vh, gamma, type, entitled
     nx.set_node_attributes(G, "Stick to Traditional", 'strategy')
 
     if type == "Homophily":
-        add_homophily_edges(G, gamma_values)
+        #add_homophily_edges(G, gamma_values, entitled_distribution)
+        G = create_homophily_network(gamma_values, seed)
 
     node_degrees = dict(G.degree())
     distinct_degrees = set(node_degrees.values())
 
-    #count_list=[]
+    count_list=[]
 
     # Print distinct degrees and their counts
-    #print("Distinct degrees of nodes and their counts:")
-    #for degree in distinct_degrees:
-        #count = list(node_degrees.values()).count(degree)
-        #count_list.append(count)
-        #print(f"Degree {degree}: {count} nodes")
+    print("Distinct degrees of nodes and their counts:")
+    for degree in distinct_degrees:
+        count = list(node_degrees.values()).count(degree)
+        count_list.append(count)
+        print(f"Degree {degree}: {count} nodes")
 
-    #average_degree = np.mean(list(dict(G.degree()).values()))
-    #print("Average network degree:", average_degree)
+    average_degree = np.mean(list(dict(G.degree()).values()))
+    print("Average network degree:", average_degree)
 
-    #total_links = G.number_of_edges()
-    #print("Total number of links:", total_links)
+    total_links = G.number_of_edges()
+    print("Total number of links:", total_links)
 
     return G
 
-# create_connected_network(size=1000, connectivity=0.05, seed=15, Vh=11, gamma=True, type="Homophily", entitled_distribution="Uniform")
+#create_connected_network(size=1000, connectivity=0.05, seed=15, Vh=11, gamma=True, type="Homophily", entitled_distribution="Normal")

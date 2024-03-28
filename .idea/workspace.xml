@@ -2,11 +2,168 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="081ddcc5-172d-483c-a94d-623e79b0b7e7" name="Changes" comment="Organised files and comments">
-      <change afterPath="$PROJECT_DIR$/experiments/test.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/experiments/exp_error_dynamics_heatmap.py.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/experiments/exp_varying_total_amount.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/experiments/experiment3.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/experiments/experiment4.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/figures/Barabasi/BiModal/res_f_Barabasi_BiModal_['percentage_inc_left'].png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/figures/Barabasi/BiModal/res_f_Barabasi_BiModal_amount_inc_left.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/figures/Barabasi/BiModal/res_f_Barabasi_BiModal_final_state.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/figures/Barabasi/BiModal/res_f_Barabasi_BiModal_gini.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/figures/Barabasi/BiModal/res_f_Barabasi_BiModal_inc_no_trans.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/figures/Barabasi/BiModal/res_f_Barabasi_BiModal_number_of_agents_incentivized.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/figures/Barabasi/BiModal/res_f_Barabasi_BiModal_number_of_spillovers.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/figures/Barabasi/BiModal/res_f_Barabasi_BiModal_time_to_95_adoption.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/figures/Barabasi/BiModal/res_f_metrics_Barabasi_BiModal.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/figures/Barabasi/Normal/res_f_Barabasi_Normal_['percentage_inc_left'].png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/figures/Barabasi/Normal/res_f_Barabasi_Normal_amount_inc_left.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/figures/Barabasi/Normal/res_f_Barabasi_Normal_final_state.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/figures/Barabasi/Normal/res_f_Barabasi_Normal_gini.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/figures/Barabasi/Normal/res_f_Barabasi_Normal_inc_no_trans.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/figures/Barabasi/Normal/res_f_Barabasi_Normal_number_of_agents_incentivized.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/figures/Barabasi/Normal/res_f_Barabasi_Normal_number_of_spillovers.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/figures/Barabasi/Normal/res_f_Barabasi_Normal_time_to_95_adoption.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/figures/Barabasi/Normal/res_f_metrics_Barabasi_Normal.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/figures/Barabasi/Uniform/res_f_Barabasi_Uniform_['percentage_inc_left'].png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/figures/Barabasi/Uniform/res_f_Barabasi_Uniform_amount_inc_left.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/figures/Barabasi/Uniform/res_f_Barabasi_Uniform_final_state.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/figures/Barabasi/Uniform/res_f_Barabasi_Uniform_gini.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/figures/Barabasi/Uniform/res_f_Barabasi_Uniform_inc_no_trans.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/figures/Barabasi/Uniform/res_f_Barabasi_Uniform_number_of_agents_incentivized.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/figures/Barabasi/Uniform/res_f_Barabasi_Uniform_number_of_spillovers.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/figures/Barabasi/Uniform/res_f_Barabasi_Uniform_time_to_95_adoption.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/figures/Barabasi/Uniform/res_f_metrics_Barabasi_Uniform.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/figures/Erdos/BiModal/res_f_Erdos_Renyi_BiModal_['percentage_inc_left'].png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/figures/Erdos/BiModal/res_f_Erdos_Renyi_BiModal_amount_inc_left.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/figures/Erdos/BiModal/res_f_Erdos_Renyi_BiModal_final_state.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/figures/Erdos/BiModal/res_f_Erdos_Renyi_BiModal_gini.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/figures/Erdos/BiModal/res_f_Erdos_Renyi_BiModal_inc_no_trans.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/figures/Erdos/BiModal/res_f_Erdos_Renyi_BiModal_number_of_agents_incentivized.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/figures/Erdos/BiModal/res_f_Erdos_Renyi_BiModal_number_of_spillovers.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/figures/Erdos/BiModal/res_f_Erdos_Renyi_BiModal_time_to_95_adoption.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/figures/Erdos/BiModal/res_f_metrics_Erdos_Renyi_BiModal.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/figures/Erdos/Normal/res_f_Erdos_Renyi_Normal_['percentage_inc_left'].png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/figures/Erdos/Normal/res_f_Erdos_Renyi_Normal_amount_inc_left.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/figures/Erdos/Normal/res_f_Erdos_Renyi_Normal_final_state.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/figures/Erdos/Normal/res_f_Erdos_Renyi_Normal_gini.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/figures/Erdos/Normal/res_f_Erdos_Renyi_Normal_inc_no_trans.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/figures/Erdos/Normal/res_f_Erdos_Renyi_Normal_number_of_agents_incentivized.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/figures/Erdos/Normal/res_f_Erdos_Renyi_Normal_number_of_spillovers.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/figures/Erdos/Normal/res_f_Erdos_Renyi_Normal_time_to_95_adoption.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/figures/Erdos/Normal/res_f_metrics_Erdos_Renyi_Normal.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/figures/Erdos/Uniform/res_f_Erdos_Renyi_Uniform_['percentage_inc_left'].png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/figures/Erdos/Uniform/res_f_Erdos_Renyi_Uniform_amount_inc_left.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/figures/Erdos/Uniform/res_f_Erdos_Renyi_Uniform_final_state.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/figures/Erdos/Uniform/res_f_Erdos_Renyi_Uniform_gini.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/figures/Erdos/Uniform/res_f_Erdos_Renyi_Uniform_inc_no_trans.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/figures/Erdos/Uniform/res_f_Erdos_Renyi_Uniform_number_of_agents_incentivized.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/figures/Erdos/Uniform/res_f_Erdos_Renyi_Uniform_number_of_spillovers.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/figures/Erdos/Uniform/res_f_Erdos_Renyi_Uniform_time_to_95_adoption.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/figures/Erdos/Uniform/res_f_metrics_Erdos_Renyi_Uniform.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/figures/Homophily/BiModal/res_f_Homophily_BiModal_['percentage_inc_left'].png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/figures/Homophily/BiModal/res_f_Homophily_BiModal_amount_inc_left.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/figures/Homophily/BiModal/res_f_Homophily_BiModal_final_state.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/figures/Homophily/BiModal/res_f_Homophily_BiModal_gini.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/figures/Homophily/BiModal/res_f_Homophily_BiModal_inc_no_trans.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/figures/Homophily/BiModal/res_f_Homophily_BiModal_number_of_agents_incentivized.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/figures/Homophily/BiModal/res_f_Homophily_BiModal_number_of_spillovers.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/figures/Homophily/BiModal/res_f_Homophily_BiModal_time_to_95_adoption.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/figures/Homophily/BiModal/res_f_metrics_Homophily_BiModal.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/figures/Homophily/Normal/res_f_Homophily_Normal_['percentage_inc_left'].png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/figures/Homophily/Normal/res_f_Homophily_Normal_amount_inc_left.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/figures/Homophily/Normal/res_f_Homophily_Normal_final_state.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/figures/Homophily/Normal/res_f_Homophily_Normal_gini.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/figures/Homophily/Normal/res_f_Homophily_Normal_inc_no_trans.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/figures/Homophily/Normal/res_f_Homophily_Normal_number_of_agents_incentivized.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/figures/Homophily/Normal/res_f_Homophily_Normal_number_of_spillovers.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/figures/Homophily/Normal/res_f_Homophily_Normal_time_to_95_adoption.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/figures/Homophily/Normal/res_f_metrics_Homophily_Normal.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/figures/Homophily/Uniform/res_f_Homophily_Uniform_['percentage_inc_left'].png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/figures/Homophily/Uniform/res_f_Homophily_Uniform_amount_inc_left.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/figures/Homophily/Uniform/res_f_Homophily_Uniform_final_state.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/figures/Homophily/Uniform/res_f_Homophily_Uniform_gini.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/figures/Homophily/Uniform/res_f_Homophily_Uniform_inc_no_trans.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/figures/Homophily/Uniform/res_f_Homophily_Uniform_number_of_agents_incentivized.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/figures/Homophily/Uniform/res_f_Homophily_Uniform_number_of_spillovers.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/figures/Homophily/Uniform/res_f_Homophily_Uniform_time_to_95_adoption.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/figures/Homophily/Uniform/res_f_metrics_Homophily_Uniform.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/figures/extra/homophily_n.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/figures/extra/res_norm_abandonment_vs_tota.textClipping" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/figures/extra/res_norm_abandonment_vs_total_to_distribute.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/figures/extra/trans_2pct_norm_abandonment_vs_total_to_distribute.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/figures/extra/trans_2pct_norm_abandonment_vs_total_to_distribute_true.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/figures/extra/transition_prob_heatmap2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/figures/extra/transition_prob_heatmap_true.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/figures/homophily_overall.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/figures/minimum_incentive_gamma.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/figures/minimum_incentive_network.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pseudo_code/homophily_n_creation.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/agent_sorting.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/utils/test_avg_degree_network.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/incentives.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/incentives.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/experiments.py" beforeDir="false" afterPath="$PROJECT_DIR$/experiments/experiments.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/experiments/experiments.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/experiments/test.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/figures/Barabasi/BiModal/Barabasi_BiModal_final_state.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/figures/Barabasi/BiModal/Barabasi_BiModal_gini.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/figures/Barabasi/BiModal/Barabasi_BiModal_number_of_agents_incentivized.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/figures/Barabasi/BiModal/Barabasi_BiModal_number_of_spillovers.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/figures/Barabasi/BiModal/Barabasi_BiModal_time_to_95_adoption.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/figures/Barabasi/BiModal/results_Barabasi_BiModal.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/figures/Barabasi/Normal/Barabasi_Normal_final_state.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/figures/Barabasi/Normal/Barabasi_Normal_gini.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/figures/Barabasi/Normal/Barabasi_Normal_number_of_agents_incentivized.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/figures/Barabasi/Normal/Barabasi_Normal_number_of_spillovers.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/figures/Barabasi/Normal/Barabasi_Normal_time_to_95_adoption.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/figures/Barabasi/Normal/results_Barabasi_Normal.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/figures/Barabasi/Uniform/Barabasi_Uniform_final_state.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/figures/Barabasi/Uniform/Barabasi_Uniform_gini.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/figures/Barabasi/Uniform/Barabasi_Uniform_number_of_agents_incentivized.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/figures/Barabasi/Uniform/Barabasi_Uniform_number_of_spillovers.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/figures/Barabasi/Uniform/Barabasi_Uniform_time_to_95_adoption.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/figures/Barabasi/Uniform/results_Barabasi_Uniform.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/figures/Erdos-Renyi/BiModal/distribution.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/figures/Erdos-Renyi/BiModal/img.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/figures/Erdos-Renyi/BiModal/incentive_levels.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/figures/Erdos-Renyi/Normal/Erdos_Renyi_Normal_final_state.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/figures/Erdos-Renyi/Normal/Erdos_Renyi_Normal_gini.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/figures/Erdos-Renyi/Normal/Erdos_Renyi_Normal_number_of_agents_incentivized.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/figures/Erdos-Renyi/Normal/Erdos_Renyi_Normal_number_of_spillovers.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/figures/Erdos-Renyi/Normal/Erdos_Renyi_Normal_time_to_95_adoption.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/figures/Erdos-Renyi/Normal/distribution.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/figures/Erdos-Renyi/Normal/results_Erdos_Renyi_Normal.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/figures/Erdos-Renyi/Uniform/Erdos_Renyi_Uniform_final_state.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/figures/Erdos-Renyi/Uniform/Erdos_Renyi_Uniform_gini.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/figures/Erdos-Renyi/Uniform/Erdos_Renyi_Uniform_number_of_agents_incentivized.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/figures/Erdos-Renyi/Uniform/Erdos_Renyi_Uniform_number_of_spillovers.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/figures/Erdos-Renyi/Uniform/Erdos_Renyi_Uniform_time_to_95_adoption.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/figures/Erdos-Renyi/Uniform/distribution.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/figures/Erdos-Renyi/Uniform/results_Erdos_Renyi_Uniform.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/figures/Homophily/BiModal/Homophily_BiModal_final_state.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/figures/Homophily/BiModal/Homophily_BiModal_gini.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/figures/Homophily/BiModal/Homophily_BiModal_number_of_agents_incentivized.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/figures/Homophily/BiModal/Homophily_BiModal_number_of_spillovers.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/figures/Homophily/BiModal/Homophily_BiModal_time_to_95_adoption.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/figures/Homophily/BiModal/results_Homophily_BiModal.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/figures/Homophily/Normal/Homophily_Normal_final_state.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/figures/Homophily/Normal/Homophily_Normal_gini.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/figures/Homophily/Normal/Homophily_Normal_number_of_agents_incentivized.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/figures/Homophily/Normal/Homophily_Normal_number_of_spillovers.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/figures/Homophily/Normal/Homophily_Normal_time_to_95_adoption.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/figures/Homophily/Normal/results_Homophily_Normal.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/figures/Homophily/Uniform/Homophily_Uniform_final_state.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/figures/Homophily/Uniform/Homophily_Uniform_gini.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/figures/Homophily/Uniform/Homophily_Uniform_number_of_agents_incentivized.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/figures/Homophily/Uniform/Homophily_Uniform_number_of_spillovers.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/figures/Homophily/Uniform/Homophily_Uniform_time_to_95_adoption.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/figures/Homophily/Uniform/results_Homophily_Uniform.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/figures/img.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/figures/img_1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/figures/img_2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/figures/img_3.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pseudo_code/homophily_creation.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pseudo_code/update_strategy.png" beforeDir="false" afterPath="$PROJECT_DIR$/pseudo_code/update_strategy.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/model.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/model.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/network_creation.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/network_creation.py" afterDir="false" />
     </list>
@@ -56,23 +213,25 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/src" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/figures" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/figures" />
       <recent name="$PROJECT_DIR$/src" />
+      <recent name="$PROJECT_DIR$/experiments" />
       <recent name="$PROJECT_DIR$/new_model" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/trash" />
-      <recent name="$PROJECT_DIR$/figures/Erdos-Renyi/Normal" />
+      <recent name="$PROJECT_DIR$/experiments" />
       <recent name="$PROJECT_DIR$/pseudo_code" />
-      <recent name="$PROJECT_DIR$/update_strategy" />
-      <recent name="$PROJECT_DIR$/figures/Erdos-Renyi/Uniform" />
+      <recent name="$PROJECT_DIR$/figures" />
+      <recent name="$PROJECT_DIR$/src" />
+      <recent name="$PROJECT_DIR$/figures/Barabasi/Normal" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.experiments">
+  <component name="RunManager" selected="Python.experiment4">
     <configuration name="Interpreter" type="PythonConfigurationType" factoryName="Python">
       <module name="incentives" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -95,7 +254,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="experiment1" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="agent_sorting" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="incentives" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -103,12 +262,12 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/experiments" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/trash/experiment1.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/agent_sorting.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -117,7 +276,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="experiments" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="distributions" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="incentives" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -125,12 +284,56 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/experiments" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src/utils" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/experiments/experiments.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/utils/distributions.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="experiment3" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="incentives" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/experiments/experiment3.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="experiment4" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="incentives" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/experiments/experiment4.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -161,65 +364,21 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="test" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="incentives" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/experiments" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/experiments/test.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="test_2" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="incentives" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/experiments" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/experiments/test_2.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
     <list>
       <item itemvalue="Python.Interpreter" />
       <item itemvalue="Python.network_creation" />
-      <item itemvalue="Python.experiment1" />
-      <item itemvalue="Python.experiments" />
-      <item itemvalue="Python.test" />
-      <item itemvalue="Python.test_2" />
+      <item itemvalue="Python.agent_sorting" />
+      <item itemvalue="Python.distributions" />
+      <item itemvalue="Python.experiment3" />
+      <item itemvalue="Python.experiment4" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.experiments" />
-        <item itemvalue="Python.test" />
-        <item itemvalue="Python.test_2" />
+        <item itemvalue="Python.experiment4" />
+        <item itemvalue="Python.distributions" />
+        <item itemvalue="Python.experiment3" />
+        <item itemvalue="Python.agent_sorting" />
         <item itemvalue="Python.network_creation" />
-        <item itemvalue="Python.experiment1" />
       </list>
     </recent_temporary>
   </component>
@@ -237,7 +396,17 @@
       <workItem from="1707210115142" duration="115420000" />
       <workItem from="1708159435800" duration="1073000" />
       <workItem from="1708246291141" duration="63820000" />
-      <workItem from="1708698288855" duration="5414000" />
+      <workItem from="1708698288855" duration="33384000" />
+      <workItem from="1709118048443" duration="40703000" />
+      <workItem from="1709458974926" duration="17946000" />
+      <workItem from="1710089808607" duration="4036000" />
+      <workItem from="1710234704221" duration="16721000" />
+      <workItem from="1710421625332" duration="731000" />
+      <workItem from="1710422671683" duration="239000" />
+      <workItem from="1710436451507" duration="2735000" />
+      <workItem from="1710782545025" duration="397000" />
+      <workItem from="1710938040557" duration="7646000" />
+      <workItem from="1711293954401" duration="28500000" />
     </task>
     <task id="LOCAL-00001" summary="First version of the model.">
       <created>1706092915188</created>
@@ -358,7 +527,14 @@
       <option name="project" value="LOCAL" />
       <updated>1708602628407</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary="Organised files and comments">
+      <created>1708870519316</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1708870519316</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -383,6 +559,13 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/src/model.py</url>
+          <line>17</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
       <default-breakpoints>
         <breakpoint type="python-exception">
           <properties notifyOnTerminate="true" exception="BaseException">
@@ -393,29 +576,36 @@
     </breakpoint-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/incentives$distributions__1_.coverage" NAME="distributions (1) Coverage Results" MODIFIED="1707818118852" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/trash/src/utils" />
-    <SUITE FILE_PATH="coverage/incentives$experiments.coverage" NAME="experiments Coverage Results" MODIFIED="1708870389805" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/experiments" />
-    <SUITE FILE_PATH="coverage/incentives$network_animation.coverage" NAME="distributions Coverage Results" MODIFIED="1706103369446" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/incentives$experiment6.coverage" NAME="experiment6 Coverage Results" MODIFIED="1707291385936" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/new_model" />
     <SUITE FILE_PATH="coverage/incentives$experiment1_random.coverage" NAME="experiment1 Coverage Results" MODIFIED="1706692126866" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/incentives$experiment2.coverage" NAME="experiment2 Coverage Results" MODIFIED="1706697926430" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/experiments" />
     <SUITE FILE_PATH="coverage/incentives$experiment5_test.coverage" NAME="experiment5_test Coverage Results" MODIFIED="1707213711423" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/new_model" />
+    <SUITE FILE_PATH="coverage/incentives$model.coverage" NAME="model Coverage Results" MODIFIED="1709370912160" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
+    <SUITE FILE_PATH="coverage/incentives$c_centrality.coverage" NAME="c_centrality Coverage Results" MODIFIED="1709397353751" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
+    <SUITE FILE_PATH="coverage/incentives$agent_sorting.coverage" NAME="agent_sorting Coverage Results" MODIFIED="1711447948580" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
+    <SUITE FILE_PATH="coverage/incentives$predicted_norm_abandonment.coverage" NAME="predicted_norm_abandonment Coverage Results" MODIFIED="1710421706882" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/utils" />
+    <SUITE FILE_PATH="coverage/incentives$test.coverage" NAME="test Coverage Results" MODIFIED="1708865242900" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/experiments" />
+    <SUITE FILE_PATH="coverage/incentives$distributions.coverage" NAME="distributions Coverage Results" MODIFIED="1711544469618" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/utils" />
+    <SUITE FILE_PATH="coverage/incentives$experiment1_test.coverage" NAME="experiment1_test Coverage Results" MODIFIED="1707401172712" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/new_model" />
+    <SUITE FILE_PATH="coverage/incentives$experiment5__1_.coverage" NAME="experiment5 (1) Coverage Results" MODIFIED="1708337061460" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/experiments" />
+    <SUITE FILE_PATH="coverage/incentives$experiment3.coverage" NAME="experiment3 Coverage Results" MODIFIED="1711542138994" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
+    <SUITE FILE_PATH="coverage/incentives$generate_metrics.coverage" NAME="generate_metrics Coverage Results" MODIFIED="1709055730448" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/experiments" />
+    <SUITE FILE_PATH="coverage/incentives$complex_centrality.coverage" NAME="complex_centrality Coverage Results" MODIFIED="1709305645600" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
+    <SUITE FILE_PATH="coverage/incentives$distributions__1_.coverage" NAME="distributions (1) Coverage Results" MODIFIED="1707818118852" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/trash/src/utils" />
+    <SUITE FILE_PATH="coverage/incentives$experiments.coverage" NAME="experiments Coverage Results" MODIFIED="1709123662478" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/experiments" />
+    <SUITE FILE_PATH="coverage/incentives$network_animation.coverage" NAME="distributions Coverage Results" MODIFIED="1706103369446" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/incentives$experiment2.coverage" NAME="experiment2 Coverage Results" MODIFIED="1710157403340" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/experiments" />
     <SUITE FILE_PATH="coverage/incentives$experiment1.coverage" NAME="experiment1 Coverage Results" MODIFIED="1708509354746" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/experiments" />
-    <SUITE FILE_PATH="coverage/incentives$model.coverage" NAME="model Coverage Results" MODIFIED="1708349146293" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
     <SUITE FILE_PATH="coverage/incentives$experiment5.coverage" NAME="experiment5 Coverage Results" MODIFIED="1707401905585" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/new_model" />
-    <SUITE FILE_PATH="coverage/incentives$network_creation.coverage" NAME="network_creation Coverage Results" MODIFIED="1708521620941" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
+    <SUITE FILE_PATH="coverage/incentives$.coverage" NAME=" Coverage Results" MODIFIED="1711442491048" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/utils" />
+    <SUITE FILE_PATH="coverage/incentives$network_creation.coverage" NAME="network_creation Coverage Results" MODIFIED="1711444988638" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
     <SUITE FILE_PATH="coverage/incentives$main.coverage" NAME="main Coverage Results" MODIFIED="1706705375700" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/incentives$predicted_norm_abandonment.coverage" NAME="predicted_norm_abandonment Coverage Results" MODIFIED="1707212168403" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/utils" />
-    <SUITE FILE_PATH="coverage/incentives$experiment4.coverage" NAME="experiment4 Coverage Results" MODIFIED="1706695500012" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/experiments" />
     <SUITE FILE_PATH="coverage/incentives$experiment1_test__1_.coverage" NAME="experiment1_test (1) Coverage Results" MODIFIED="1707909599940" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/experiments" />
+    <SUITE FILE_PATH="coverage/incentives$experiment4.coverage" NAME="experiment4 Coverage Results" MODIFIED="1711571445476" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
     <SUITE FILE_PATH="coverage/incentives$network_degree_count.coverage" NAME="network_degree_count Coverage Results" MODIFIED="1708102568228" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/utils" />
     <SUITE FILE_PATH="coverage/incentives$test_2.coverage" NAME="test_2 Coverage Results" MODIFIED="1708597811062" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/experiments" />
-    <SUITE FILE_PATH="coverage/incentives$test.coverage" NAME="test Coverage Results" MODIFIED="1708865242900" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/experiments" />
+    <SUITE FILE_PATH="coverage/incentives$test_avg_degree_network.coverage" NAME="test_avg_degree_network Coverage Results" MODIFIED="1709296519393" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/utils" />
     <SUITE FILE_PATH="coverage/incentives$Unnamed.coverage" NAME="Interpreter Coverage Results" MODIFIED="1706089554469" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/incentives$distributions.coverage" NAME="distributions Coverage Results" MODIFIED="1707318394291" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/utils" />
-    <SUITE FILE_PATH="coverage/incentives$experiment1_test.coverage" NAME="experiment1_test Coverage Results" MODIFIED="1707401172712" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/new_model" />
     <SUITE FILE_PATH="coverage/incentives$experiment7.coverage" NAME="experiments Coverage Results" MODIFIED="1708436582008" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/experiments" />
-    <SUITE FILE_PATH="coverage/incentives$experiment5__1_.coverage" NAME="experiment5 (1) Coverage Results" MODIFIED="1708337061460" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/experiments" />
-    <SUITE FILE_PATH="coverage/incentives$experiment3.coverage" NAME="experiment3 Coverage Results" MODIFIED="1706433514979" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/incentives$experiment_heatmap.coverage" NAME="experiment_heatmap Coverage Results" MODIFIED="1710439016328" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/experiments" />
   </component>
 </project>

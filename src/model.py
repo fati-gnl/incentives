@@ -6,6 +6,8 @@ Agents interact with their neighbors, updating their strategies based on payoff 
 
 Methods:
     - generate_distribution: Generate Vh values from a given distribution.
+    - payoff_current_choice: Calculate the payoff of an agents current choice.
+    - update_strategy: Update the strategy of an agent by comparing the current strategy with the transition (and possible incentives).
     - step: Execute different step of the model until a maximum predefined step has reached, or no changes have been found for a consecutive number of rounds.
 """
 import networkx as nx
@@ -13,56 +15,20 @@ import numpy as np
 from scipy.stats import truncnorm
 import random
 
-def sort_by_incentive_dist(G, seed, incentive_strategy):
-    """
-    This function returns a sorted list of the nodes of the network based on the incentive strategy.
-    :param nx.Graph G: The graph that holds the nodes.
-    :param int seed:  Seed for no_gamma number generation.
-    :param String incentive_strategy: Strategy for selecting who will receive the incentive: "Random", "Highest_degree", "Lowest_degree", "Highest_gamma", "Lowest_gamma"
-    """
-    random.seed(seed)
-
-    if incentive_strategy == "Random":
-        sorted_nodes = random.sample(G.nodes(), len(G.nodes()))
-    elif incentive_strategy == "Highest_degree":
-        sorted_nodes = sorted(G.nodes(), key=lambda x: G.degree(x), reverse=True)
-    elif incentive_strategy == "Lowest_degree":
-        sorted_nodes = sorted(G.nodes(), key=lambda x: G.degree(x))
-    elif incentive_strategy == "Highest_gamma":
-        sorted_nodes = sorted(G.nodes(), key=lambda x: G.nodes[x]['gamma'], reverse=True)
-    elif incentive_strategy == "Lowest_gamma":
-        sorted_nodes = sorted(G.nodes(), key=lambda x: G.nodes[x]['gamma'])
-    elif incentive_strategy == "Closeness_centrality":
-        sorted_nodes = sorted(G.nodes(), key=lambda x: nx.closeness_centrality(G)[x], reverse=True)
-    elif incentive_strategy == "Betweenness_centrality":
-        print("has entered")
-        sorted_nodes = sorted(G.nodes(), key=lambda x: nx.betweenness_centrality(G)[x], reverse=True)
-        print("has done it")
-    elif incentive_strategy == "Eigenvector_centrality":
-        sorted_nodes = sorted(G.nodes(), key=lambda x: nx.eigenvector_centrality(G)[x], reverse=True)
-    elif incentive_strategy == "High_local_clustering_c":
-        print("has entered")
-        sorted_nodes = sorted(G.nodes(), key=lambda x: nx.clustering(G, x), reverse=True)
-        print("has done it")
-    elif incentive_strategy == "Low_local_clustering_c":
-        sorted_nodes = sorted(G.nodes(), key=lambda x: nx.clustering(G, x))
-    else:
-        raise ValueError("Invalid incentive strategy")
-
-    return sorted_nodes
-
 class GameModel():
-    def __init__(self, num_agents, network, Vl, p, total_to_distribute, seed, incentive_strategy, beta):
+    def __init__(self, num_agents, network, Vl, p, total_to_distribute, seed, incentive_strategy, beta, sort_by_incentive_dist, amount_extra):
         """
         Initialize a GameModel.
         :param int num_agents: Number of agents in the model.
         :param network: Parameters for generating the network (e.g., size, connectivity).
         :param float Vl: Low reward for not selecting their preferred strategy.
         :param float p: Penalty for miscoordination with neighbours.
-        :param int total_to_distribute: Amount of incentive to distribute
-        :param int seed: Seed for random number generations
-        :param String incentive_strategy: Strategy for selecting who will receive the incentive: "Random", "Highest_degree", "Lowest_degree", "Highest_gamma", "Lowest_gamma"
+        :param int total_to_distribute: Amount of incentive to distribute.
+        :param int seed: Seed for random number generations.
+        :param String incentive_strategy: Strategy for selecting who will receive the incentive: "Random", "Highest_degree", "Lowest_degree", "Highest_gamma", "Lowest_gamma".
         :param int beta: rate of transition between the strategies (sigmoid function)
+        :param [integers] sort_by_incentive_dist: Sorted indices of the nodes based on a predefined incentive strategy.
+        :param float amount_extra: Extra amount of money that should be given to individuals to make the option of changing strategies more favorable.
         """
         self.num_agents = num_agents
         self.network = network
@@ -73,6 +39,7 @@ class GameModel():
         self.p = p
         self.Vl = Vl
         self.beta = beta
+        self.amount_extra = amount_extra
 
         np.random.seed(self.seed)
 
@@ -83,10 +50,9 @@ class GameModel():
         self.total_incentives_ot = np.zeros(num_agents)
         self.probabilities_informed = np.zeros(num_agents)
 
-        # Get the adjacent matrix for the neighbours
         self.adjacency_matrix = nx.to_numpy_array(self.network)
 
-        self.sorted_nodes = sort_by_incentive_dist(self.network, self.seed, self.incentive_strategy)
+        self.sorted_nodes = sort_by_incentive_dist
 
         num_nodes = len(self.sorted_nodes)
         for i, node in enumerate(self.sorted_nodes):
@@ -96,36 +62,11 @@ class GameModel():
         self.pct_norm_abandonmnet = []
         self.incentive_amounts = []
         self.transition_probs = []
-        self.sigmoid_inputs = []
+        self.payoff_diff = []
         self.timesteps_95 = 0
         self.has_reached_95 = False
         self.spillovers = 0
         self.inc_but_no_transition = 0
-
-        for i in range(0, self.num_agents - 1):
-            self.calculate_min_adopters_to_transition(i)
-            print("Degree " + str(self.network.degree(i)))
-
-
-    def calculate_min_adopters_to_transition(self, agent_id):
-
-        # Get the number of neighbours of a particular node
-        N = np.sum(self.adjacency_matrix[agent_id] > 0)
-
-        # Set the default value high -> case when even if all neighbours would transition, an incentive would still be needed
-        min_adopters = 9999
-
-        for i in range(N+1):
-            # i = number of adopters of the new technology
-            payoff_new = self.gamma_values[agent_id] * N - self.p * (N-i)
-            payoff_traditional = self.Vl * N - self.p * (i)
-
-            if payoff_new > payoff_traditional:
-                min_adopters = i
-                break
-
-        print("min_adopters " + str(min_adopters))
-        return min_adopters
 
     @staticmethod
     def generate_distribution(lower_bound: float, upper_bound: float, size: int, entitled_distribution: str) -> np.ndarray:
@@ -156,6 +97,7 @@ class GameModel():
             values2 = truncnorm.rvs(a2, b2, loc=mean[1], scale=sd[1], size=size)
 
             values = np.concatenate((values, values2))
+
         else:
             raise ValueError("Invalid entitled distribution strategy")
 
@@ -196,7 +138,7 @@ class GameModel():
             transition_prob = round(1 / (1 + np.exp(-sigmoid_input)),4)
 
             self.transition_probs.append(transition_prob)
-            self.sigmoid_inputs.append(sigmoid_input)
+            self.payoff_diff.append((payoff_new - current_payoff))
 
             if random.random() < transition_prob:
                 self.current_strategies[agent_id] = "Adopt New Technology"
@@ -211,7 +153,6 @@ class GameModel():
         Execute one step of the model.
         :param int max_steps: Maximum number of steps to run the model for.
         """
-        np.random.seed(self.seed)
         unchanged_steps = 0
 
         for step_count in range(max_steps):
@@ -245,10 +186,12 @@ class GameModel():
                 payoff_new = self.gamma_values[agent_id] * N - self.p * num_stick_to_traditional
                 payoff_traditional = self.Vl * N - self.p * num_adopt_new_tech
 
-                # Maximum incentive to give -> add a bit more so that they are not equal
-                payoff_needed_for_change = payoff_traditional - payoff_new + 1
+                # Maximum incentive to give -> add a bit more (amount_extra) so that they are not equal
+                payoff_needed_for_change = payoff_traditional - payoff_new + self.amount_extra
 
+                # TODO: ignore the self amount extra here IN THE IF CONDITION
                 if ((total - payoff_needed_for_change) > 0) and (self.current_strategies[agent_id] == "Stick to Traditional") and (payoff_needed_for_change > 0) and any(self.current_strategies != "Adopt New Technology"):
+                    # probability that an agent applies for an incentive
                     if random.random() <= self.probabilities_informed[agent_id]:
                         self.incentives[agent_id] = payoff_needed_for_change
                         self.total_incentives_ot[agent_id] += payoff_needed_for_change
@@ -271,7 +214,6 @@ class GameModel():
             self.spillovers = sum((self.current_strategies == "Adopt New Technology") & (self.total_incentives_ot == 0))
             self.inc_but_no_transition = np.sum((self.total_incentives_ot > 0) & (self.current_strategies == "Stick to Traditional"))
 
-            # Check if in this timeunit, anything has changed. If there are three timeunits with no changes, the simulation can end.
             if np.array_equal(initial_strategies, self.current_strategies) :
                 unchanged_steps += 1
             else:
@@ -281,3 +223,4 @@ class GameModel():
                 remaining_steps = max_steps - step_count - 1
                 self.pct_norm_abandonmnet.extend([pct_norm_abandonmnet] * remaining_steps)
                 break
+
