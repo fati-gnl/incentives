@@ -14,7 +14,6 @@ import networkx as nx
 import numpy as np
 import random
 import multiprocessing as mp
-import src.network_creation
 
 def sort_by_betweenness_centrality_parallel(G):
     """
@@ -107,7 +106,6 @@ def calculate_spillover(G):
         n_spillovers[node0] = total_switched
 
         activated_adjacency_matrix = np.zeros((num_agents, num_agents))
-        print("has_activated", has_activated)
         for activated_node in np.nonzero(has_activated)[0]:
             activated_adjacency_matrix[activated_node] = adjacency_matrix[activated_node] * has_activated
         activated_connections.append(activated_adjacency_matrix)
@@ -118,7 +116,6 @@ def calculate_spillover(G):
 
         avg_shortest_path_lengths.append(avg_length)
 
-    print("avg_shortest_path_lengths", avg_shortest_path_lengths)
     return n_spillovers, avg_shortest_path_lengths
 
 def sort_by_incentive_dist(G, seed, incentive_strategy):
@@ -151,13 +148,7 @@ def sort_by_incentive_dist(G, seed, incentive_strategy):
     elif incentive_strategy =="Complex_centrality":
         _, complex_centrality = calculate_spillover(G)
         sorted_nodes = sorted(G.nodes(), key=lambda x: complex_centrality[x], reverse=True)
-    elif incentive_strategy == "Spillover":
-        n_spillovers, _ = calculate_spillover(G)
-        sorted_nodes = sorted(G.nodes(), key=lambda x: n_spillovers[x], reverse=True)
     else:
         raise ValueError("Invalid incentive strategy")
 
     return sorted_nodes
-
-#G = network_creation.create_connected_network(20, 0.05, 123, Vh=11, gamma=True, type="Erdos_Renyi", entitled_distribution="Normal")
-#calculate_spillover(G)

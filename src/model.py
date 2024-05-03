@@ -69,31 +69,37 @@ class GameModel():
         self.inc_but_no_transition = 0
 
     @staticmethod
-    def generate_distribution(lower_bound: float, upper_bound: float, size: int, entitled_distribution: str) -> np.ndarray:
+    def generate_distribution(mean: float, min_value: float, width_percentage: float,entitled_distribution: str) -> np.ndarray:
         """
-        Generate values from a truncated normal distribution.
-        :param float lower_bound: Lower bound for the truncated distribution.
-        :param float upper_bound: Upper bound for the truncated distribution.
-        :param int size: Number of values to generate.
-        :param str entitled_distribution: Type of distribution from ["Uniform", "Normal", "BiModal"]
-        :return: Generated values from the truncated normal distribution.
+        Generate values from a normal distribution.
+        :param float mean: Mean of the distribution.
+        :param float min_value: Minimum value of the distribution.
+        :param float width_percentage: Percentage of the distance between mean and min_value to determine the width of the distribution.
+        :param str entitled_distribution: Type of distribution to consider: Uniform, Normal or BiModal
+        :return: Generated values from the normal distribution.
         """
+
+        i = mean - (mean - min_value) * width_percentage
+        j = mean + (mean - i)
+
+        sd = (j - mean) / 3
+
+        size = 100000
+
         if entitled_distribution == "Uniform":
-            values = np.random.uniform(low=9, high=13, size=100000)
+            values = np.random.uniform(low=i, high=j, size=100000)
 
         elif (entitled_distribution == "Normal"):
-            sd = [1]
-            mean = [11]
-            a1, b1 = (lower_bound - mean[0]) / sd[0], (upper_bound - mean[0]) / sd[0]
-            values = truncnorm.rvs(a1, b1, loc=mean[0], scale=sd[0], size=size)
+            values = np.random.normal(loc=mean, scale=sd, size=size)
+            values = np.clip(values, i, j)
 
         elif (entitled_distribution == "BiModal"):
-            sd = [0.4, 0.6]
-            mean = [12,10]
-            a1, b1 = (lower_bound - mean[0]) / sd[0], (upper_bound - mean[0]) / sd[0]
+            sd = [0.4 * sd, 0.6 * sd]
+            mean = [i + (0.5 * (mean - i)), j - (0.5 * (mean - i))]
+            a1, b1 = (i - mean[0]) / sd[0], (j - mean[0]) / sd[0]
             values = truncnorm.rvs(a1, b1, loc=mean[0], scale=sd[0], size=size)
 
-            a2, b2 = (lower_bound - mean[1]) / sd[1], (upper_bound - mean[1]) / sd[1]
+            a2, b2 = (i - mean[1]) / sd[1], (j - mean[1]) / sd[1]
             values2 = truncnorm.rvs(a2, b2, loc=mean[1], scale=sd[1], size=size)
 
             values = np.concatenate((values, values2))
@@ -222,5 +228,10 @@ class GameModel():
             if unchanged_steps == 3:
                 remaining_steps = max_steps - step_count - 1
                 self.pct_norm_abandonmnet.extend([pct_norm_abandonmnet] * remaining_steps)
+                if self.has_reached_95 == False:
+                    self.timesteps_95 = None
                 break
+
+        if self.has_reached_95 == False:
+            self.timesteps_95 = None
 

@@ -14,11 +14,13 @@ class Tests(unittest.TestCase):
         """
         types = ["Barabasi", "Erdos_Renyi", "Homophily"]
         distributions = ["BiModal", "Normal", "Uniform"]
-        threshold = 50
+
+        avg_degree = 20
+        threshold = avg_degree
 
         for network_type in types:
             for distribution in distributions:
-                G = create_connected_network(size=1000, connectivity=0.05, seed=15, Vh=11, gamma=True, type=network_type, entitled_distribution=distribution)
+                G = create_connected_network(size=1000, connectivity=0.05, seed=15, Vh=11, gamma=True, type=network_type, entitled_distribution=distribution, p_in = 0.8, average_degree = avg_degree)
                 average_degree = np.mean(list(dict(G.degree()).values()))
                 print("average_degree", average_degree)
                 self.assertTrue((average_degree - 2) <= threshold) and ((average_degree + 2) >= threshold), f"Average network degree deviates by more than {threshold} units for {network_type} network with {distribution} distribution."
